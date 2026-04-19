@@ -89,8 +89,24 @@ export default function PortalPage() {
 
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
 
-        {/* ── AGENDA TIPO CALENDARIO ── */}
-        <div>
+        {/* ── ACCESOS RÁPIDOS ── */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { href: '/portal/checkin', emoji: '✅', label: 'Check-in', sub: 'Recibir / Entregar', color: '#16a34a' },
+            { href: '/portal/asistencia', emoji: '📊', label: 'Asistencia', sub: 'Historial', color: '#D97706' },
+            { href: '/portal/agenda', emoji: '📅', label: 'Agenda', sub: 'Domingos', color: '#7c3aed' },
+            { href: '/portal/buscar', emoji: '🔍', label: 'Buscar', sub: 'Niños(as)', color: '#0369a1' },
+          ].map((item) => (
+            <a key={item.href} href={item.href}
+              className="rounded-2xl border-2 border-yellow-200 bg-white p-4 text-center hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-1">{item.emoji}</div>
+              <p className="font-bold text-sm" style={{ color: item.color }}>{item.label}</p>
+              <p className="text-xs text-gray-400">{item.sub}</p>
+            </a>
+          ))}
+        </div>
+
+        {/* ── AGENDA TIPO CALENDARIO ── */}        <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold" style={{ color: accentColor }}>
               📅 Agenda Dominical

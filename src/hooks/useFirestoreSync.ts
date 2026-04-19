@@ -5,10 +5,12 @@ import { escucharAlumnos, escucharApoderados } from '@/lib/firestore/alumnosServ
 import { escucharPersonal } from '@/lib/firestore/personalService';
 import { escucharSalones } from '@/lib/firestore/salonesService';
 import { escucharAgenda } from '@/lib/firestore/agendaService';
+import { escucharAsistencia } from '@/lib/firestore/asistenciaService';
 import { useAlumnosStore } from '@/stores/alumnosStore';
 import { usePersonalStore } from '@/stores/personalStore';
 import { useSalonesStore } from '@/stores/salonesStore';
 import { useAgendaStore } from '@/stores/agendaStore';
+import { useAsistenciaStore } from '@/stores/asistenciaStore';
 
 /**
  * Hook que sincroniza Firestore → stores de Zustand en tiempo real.
@@ -31,6 +33,9 @@ export function useFirestoreSync() {
       }),
       escucharAgenda((asignaciones) => {
         useAgendaStore.setState({ asignaciones });
+      }),
+      escucharAsistencia((registros) => {
+        useAsistenciaStore.setState({ registros });
       }),
     ];
 
