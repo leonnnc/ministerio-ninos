@@ -70,7 +70,7 @@ export default function Home() {
       </CarruselFondo>
 
       {/* ── 2. SCROLL DE FOTOS última reunión dominical ── */}
-      <section className="py-16 bg-white" id="reunion">
+      <section className="py-16 bg-[#FFFDE7]" id="reunion">
         <div className="max-w-6xl mx-auto px-6 mb-8">
           <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">
             Última Reunión Dominical
@@ -81,9 +81,9 @@ export default function Home() {
         {/* Scroll horizontal con efecto degradé en los bordes */}
         <div className="relative">
           {/* Degradé izquierdo */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#FFFDE7] to-transparent z-10 pointer-events-none" />
           {/* Degradé derecho */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#FFFDE7] to-transparent z-10 pointer-events-none" />
 
           <div className="flex gap-4 overflow-x-auto px-16 pb-4 scrollbar-hide snap-x snap-mandatory">
             {FOTOS_REUNION.map((foto, i) => (
@@ -158,7 +158,7 @@ export default function Home() {
       </section>
 
       {/* ── 4. GRUPOS ── */}
-      <section className="py-16 px-6 bg-gray-50" id="grupos">
+      <section className="py-16 px-6 bg-[#FFFDE7]" id="grupos">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">Nuestros Grupos</h2>
           <p className="text-center text-gray-500 mb-10">Cada niño en el salón perfecto para su edad</p>
@@ -178,7 +178,7 @@ export default function Home() {
       </section>
 
       {/* ── 5. VIDEOS DEL MINISTERIO ── */}
-      <section className="py-16 px-6 bg-white" id="videos">
+      <section className="py-16 px-6 bg-[#FFFDE7]" id="videos">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">Videos del Ministerio</h2>
           <p className="text-center text-gray-500 mb-10">Revive los mejores momentos</p>
