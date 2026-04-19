@@ -14,7 +14,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-primary-700 text-white shadow-md" aria-label="Navegación principal">
+    <nav className="text-white shadow-md" style={{ background: '#F57F17' }} aria-label="Navegación principal">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo / nombre */}
         <Link href="/" className="text-xl font-bold tracking-wide hover:text-primary-200 transition-colors">
@@ -39,7 +39,7 @@ export default function Navbar() {
 
         {/* Hamburger button */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2 rounded hover:bg-primary-600 transition-colors"
+          className="md:hidden flex flex-col gap-1.5 p-2 rounded hover:bg-yellow-600 transition-colors"
           onClick={() => setOpen((prev) => !prev)}
           aria-label="Abrir menú"
           aria-expanded={open}
@@ -52,7 +52,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <ul role="navigation" aria-label="Menú móvil" className="md:hidden bg-primary-800 px-4 pb-4 flex flex-col gap-3 text-sm font-medium">
+        <ul role="navigation" aria-label="Menú móvil" className="md:hidden px-4 pb-4 flex flex-col gap-3 text-sm font-medium" style={{ background: '#E65100' }}>
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link

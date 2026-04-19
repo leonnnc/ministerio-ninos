@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        // Paleta principal morado (para admin, formularios)
         primary: {
           50:  "#f5f3ff",
           100: "#ede9fe",
@@ -23,6 +24,20 @@ const config: Config = {
           800: "#5b21b6",
           900: "#4c1d95",
         },
+        // Paleta amarillo — base de la identidad visual
+        amarillo: {
+          50:  "#FFFEF5",  // casi blanco cálido
+          100: "#FFFDE7",  // amarillo patito muy suave
+          200: "#FFF9C4",  // amarillo claro
+          300: "#FFF176",  // amarillo medio
+          400: "#FFEE58",  // amarillo vivo
+          500: "#FFD600",  // amarillo intenso
+          600: "#F9A825",  // amarillo dorado
+          700: "#F57F17",  // ámbar oscuro
+          800: "#E65100",  // naranja ámbar
+          900: "#BF360C",  // ámbar muy oscuro
+        },
+        // Acento dorado (botones, highlights)
         accent: {
           50:  "#fffbeb",
           100: "#fef3c7",

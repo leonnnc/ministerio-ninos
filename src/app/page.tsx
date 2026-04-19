@@ -3,27 +3,12 @@
 import Link from "next/link";
 import CarruselFondo, { type MediaItem } from "@/components/ui/CarruselFondo";
 
-// ─── Carrusel hero ────────────────────────────────────────────────────────────
-// Reemplaza con tus propios archivos en /public/media/
 const MEDIA_CARRUSEL: MediaItem[] = [
-  {
-    tipo: 'imagen',
-    src: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80',
-    alt: 'Niños en el ministerio',
-  },
-  {
-    tipo: 'imagen',
-    src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1600&q=80',
-    alt: 'Niños aprendiendo',
-  },
-  {
-    tipo: 'imagen',
-    src: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=1600&q=80',
-    alt: 'Comunidad infantil',
-  },
+  { tipo: 'imagen', src: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80', alt: 'Niños en el ministerio' },
+  { tipo: 'imagen', src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1600&q=80', alt: 'Niños aprendiendo' },
+  { tipo: 'imagen', src: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=1600&q=80', alt: 'Comunidad infantil' },
 ];
 
-// ─── Fotos última reunión dominical ──────────────────────────────────────────
 // Reemplaza con tus fotos reales en /public/media/reunion/
 const FOTOS_REUNION = [
   { src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80', alt: 'Reunión 1' },
@@ -34,8 +19,7 @@ const FOTOS_REUNION = [
   { src: 'https://images.unsplash.com/photo-1526976668912-1a811878dd37?w=600&q=80', alt: 'Reunión 6' },
 ];
 
-// ─── Videos del ministerio ────────────────────────────────────────────────────
-// Reemplaza con tus videos reales. Puedes usar URLs de YouTube embed o /public/media/
+// Reemplaza con tus videos reales de YouTube embed
 const VIDEOS = [
   { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', titulo: 'Alabanza dominical' },
   { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', titulo: 'Mensaje para los niños' },
@@ -44,16 +28,16 @@ const VIDEOS = [
 ];
 
 const grupos = [
-  { nombre: 'Cuna', rango: '0 – 2 años', emoji: '🍼', bg: 'bg-pink-100', border: 'border-pink-300', text: 'text-pink-700' },
-  { nombre: 'Preescolar', rango: '3 – 5 años', emoji: '🎨', bg: 'bg-yellow-100', border: 'border-yellow-300', text: 'text-yellow-700' },
-  { nombre: 'Primaria Baja', rango: '6 – 10 años', emoji: '📚', bg: 'bg-green-100', border: 'border-green-300', text: 'text-green-700' },
-  { nombre: 'Primaria Alta', rango: '11 – 13 años', emoji: '🌟', bg: 'bg-blue-100', border: 'border-blue-300', text: 'text-blue-700' },
+  { nombre: 'Cuna',         rango: '0 – 2 años',   emoji: '🍼', bg: 'bg-yellow-100',  border: 'border-yellow-300', text: 'text-yellow-800' },
+  { nombre: 'Preescolar',   rango: '3 – 5 años',   emoji: '🎨', bg: 'bg-amber-100',   border: 'border-amber-300',  text: 'text-amber-800'  },
+  { nombre: 'Primaria Baja',rango: '6 – 10 años',  emoji: '📚', bg: 'bg-yellow-200',  border: 'border-yellow-400', text: 'text-yellow-900' },
+  { nombre: 'Primaria Alta',rango: '11 – 13 años', emoji: '🌟', bg: 'bg-amber-200',   border: 'border-amber-400',  text: 'text-amber-900'  },
 ];
 
 export default function Home() {
   return (
     <>
-      {/* ── 1. HERO con carrusel de fondo ── */}
+      {/* ── 1. HERO carrusel ── */}
       <CarruselFondo items={MEDIA_CARRUSEL} intervalo={6000}>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-lg mb-4">
           ✝️ Ministerio de Niños
@@ -63,130 +47,89 @@ export default function Home() {
         </p>
         <Link
           href="/inscripcion"
-          className="bg-accent-400 hover:bg-accent-500 text-primary-900 font-bold px-8 py-3 rounded-xl shadow-lg transition-colors text-lg"
+          className="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold px-8 py-3 rounded-xl shadow-lg transition-colors text-lg"
         >
           Inscribir a mi hijo
         </Link>
       </CarruselFondo>
 
-      {/* ── 2. SCROLL DE FOTOS última reunión dominical ── */}
-      <section className="py-16 bg-[#FFFDE7]" id="reunion">
+      {/* ── 2. FOTOS última reunión — fondo amarillo suave ── */}
+      <section className="py-16" style={{ background: '#FFFDE7' }} id="reunion">
         <div className="max-w-6xl mx-auto px-6 mb-8">
-          <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">
+          <h2 className="text-3xl font-bold text-center mb-1" style={{ color: '#F57F17' }}>
             Última Reunión Dominical
           </h2>
-          <p className="text-center text-gray-500">Momentos especiales de nuestra familia</p>
+          <p className="text-center" style={{ color: '#F9A825' }}>Momentos especiales de nuestra familia</p>
         </div>
-
-        {/* Scroll horizontal con efecto degradé en los bordes */}
         <div className="relative">
-          {/* Degradé izquierdo */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#FFFDE7] to-transparent z-10 pointer-events-none" />
-          {/* Degradé derecho */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#FFFDE7] to-transparent z-10 pointer-events-none" />
-
+          <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to right, #FFFDE7, transparent)' }} />
+          <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to left, #FFFDE7, transparent)' }} />
           <div className="flex gap-4 overflow-x-auto px-16 pb-4 scrollbar-hide snap-x snap-mandatory">
             {FOTOS_REUNION.map((foto, i) => (
-              <div
-                key={i}
-                className="flex-none w-72 h-52 sm:w-80 sm:h-60 rounded-2xl overflow-hidden shadow-md snap-start"
-              >
+              <div key={i} className="flex-none w-72 h-52 sm:w-80 sm:h-60 rounded-2xl overflow-hidden shadow-md snap-start border-2 border-yellow-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={foto.src}
-                  alt={foto.alt}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                />
+                <img src={foto.src} alt={foto.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 3. HISTORIA, VISIÓN Y MISIÓN ── */}
-      <section
-        id="historia"
-        className="relative py-20 px-6 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #4c1d95 0%, #6d28d9 40%, #7c3aed 70%, #a78bfa 100%)',
-        }}
-      >
-        {/* Círculos decorativos de fondo */}
-        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-white/5" />
-        <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-white/5" />
-
+      {/* ── 3. HISTORIA / VISIÓN / MISIÓN — degradé amarillo intenso ── */}
+      <section id="historia" className="relative py-20 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #F57F17 0%, #FFD600 45%, #FFEE58 75%, #FFF9C4 100%)' }}>
+        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full opacity-20" style={{ background: '#FFD600' }} />
+        <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full opacity-20" style={{ background: '#F9A825' }} />
         <div className="relative max-w-5xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-16 drop-shadow" style={{ color: '#4a2c00' }}>
             Nuestra Historia
           </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Historia */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-              <div className="text-4xl mb-4 text-center">📖</div>
-              <h3 className="text-xl font-bold text-white text-center mb-3">Cómo Empezamos</h3>
-              <p className="text-white/80 text-sm leading-relaxed text-center">
-                Nació de un sueño: ver a cada niño conocer el amor de Dios. Con un pequeño grupo
-                de familias comprometidas, comenzamos a construir un espacio seguro donde los
-                niños pudieran crecer en fe, valores y comunidad.
-              </p>
-            </div>
-
-            {/* Visión */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-              <div className="text-4xl mb-4 text-center">🔭</div>
-              <h3 className="text-xl font-bold text-white text-center mb-3">Nuestra Visión</h3>
-              <p className="text-white/80 text-sm leading-relaxed text-center">
-                Ser un ministerio de referencia que forme niños con carácter, identidad y propósito,
-                preparándolos para ser líderes que transformen su generación con los valores
-                del Reino de Dios.
-              </p>
-            </div>
-
-            {/* Misión */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-              <div className="text-4xl mb-4 text-center">🎯</div>
-              <h3 className="text-xl font-bold text-white text-center mb-3">Nuestra Misión</h3>
-              <p className="text-white/80 text-sm leading-relaxed text-center">
-                Enseñar la Palabra de Dios de manera creativa y relevante, crear un ambiente de
-                amor y pertenencia, y acompañar a cada familia en el proceso de formación
-                espiritual de sus hijos.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. GRUPOS ── */}
-      <section className="py-16 px-6 bg-[#FFFDE7]" id="grupos">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">Nuestros Grupos</h2>
-          <p className="text-center text-gray-500 mb-10">Cada niño en el salón perfecto para su edad</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {grupos.map((g) => (
-              <div
-                key={g.nombre}
-                className={`rounded-2xl border-2 ${g.border} ${g.bg} p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow`}
-              >
-                <span className="text-5xl mb-3">{g.emoji}</span>
-                <h3 className={`text-xl font-bold ${g.text}`}>{g.nombre}</h3>
-                <p className="text-gray-600 text-sm mt-1">{g.rango}</p>
+            {[
+              { emoji: '📖', titulo: 'Cómo Empezamos', texto: 'Nació de un sueño: ver a cada niño conocer el amor de Dios. Con un pequeño grupo de familias comprometidas, comenzamos a construir un espacio seguro donde los niños pudieran crecer en fe, valores y comunidad.' },
+              { emoji: '🔭', titulo: 'Nuestra Visión', texto: 'Ser un ministerio de referencia que forme niños con carácter, identidad y propósito, preparándolos para ser líderes que transformen su generación con los valores del Reino de Dios.' },
+              { emoji: '🎯', titulo: 'Nuestra Misión', texto: 'Enseñar la Palabra de Dios de manera creativa y relevante, crear un ambiente de amor y pertenencia, y acompañar a cada familia en el proceso de formación espiritual de sus hijos.' },
+            ].map((item) => (
+              <div key={item.titulo} className="rounded-2xl p-6 shadow-lg border border-yellow-300/60"
+                style={{ background: 'rgba(255,255,255,0.35)', backdropFilter: 'blur(8px)' }}>
+                <div className="text-4xl mb-4 text-center">{item.emoji}</div>
+                <h3 className="text-xl font-bold text-center mb-3" style={{ color: '#4a2c00' }}>{item.titulo}</h3>
+                <p className="text-sm leading-relaxed text-center" style={{ color: '#5a3500' }}>{item.texto}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 5. VIDEOS DEL MINISTERIO ── */}
-      <section className="py-16 px-6 bg-[#FFFDE7]" id="videos">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">Videos del Ministerio</h2>
-          <p className="text-center text-gray-500 mb-10">Revive los mejores momentos</p>
+      {/* ── 4. GRUPOS — fondo amarillo medio ── */}
+      <section className="py-16 px-6" style={{ background: '#FFF9C4' }} id="grupos">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-2" style={{ color: '#E65100' }}>Nuestros Grupos</h2>
+          <p className="text-center mb-10" style={{ color: '#F57F17' }}>Cada niño en el salón perfecto para su edad</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {grupos.map((g) => (
+              <div key={g.nombre}
+                className={`rounded-2xl border-2 ${g.border} ${g.bg} p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow`}>
+                <span className="text-5xl mb-3">{g.emoji}</span>
+                <h3 className={`text-xl font-bold ${g.text}`}>{g.nombre}</h3>
+                <p className="text-sm mt-1" style={{ color: '#78350f' }}>{g.rango}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          {/* 2 filas de 2 columnas en desktop, 1 columna en móvil */}
+      {/* ── 5. VIDEOS — fondo amarillo dorado suave ── */}
+      <section className="py-16 px-6" style={{ background: '#FFF3E0' }} id="videos">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-2" style={{ color: '#E65100' }}>Videos del Ministerio</h2>
+          <p className="text-center mb-10" style={{ color: '#F57F17' }}>Revive los mejores momentos</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {VIDEOS.map((video, i) => (
-              <div key={i} className="rounded-2xl overflow-hidden shadow-md bg-gray-100">
+              <div key={i} className="rounded-2xl overflow-hidden shadow-md border-2 border-yellow-200"
+                style={{ background: '#FFFDE7' }}>
                 <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                   <iframe
                     src={video.src}
@@ -197,7 +140,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="px-4 py-3">
-                  <p className="font-semibold text-gray-800 text-sm">{video.titulo}</p>
+                  <p className="font-semibold text-sm" style={{ color: '#78350f' }}>{video.titulo}</p>
                 </div>
               </div>
             ))}
