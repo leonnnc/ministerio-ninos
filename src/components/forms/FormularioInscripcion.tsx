@@ -113,6 +113,7 @@ export default function FormularioInscripcion({ onExito }: FormularioInscripcion
           <Input
             label="Fecha de nacimiento"
             type="date"
+            max={new Date().toISOString().split('T')[0]}
             error={errors.alumno?.fechaNacimiento?.message}
             {...register('alumno.fechaNacimiento')}
           />
