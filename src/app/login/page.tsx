@@ -35,21 +35,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12" style={{ background: '#FFFDE7' }}>
       <div className="w-full max-w-md">
-        {/* Franja superior formal */}
-        <div className="rounded-t-3xl px-8 pt-10 pb-8 text-center" style={{ background: '#1a1a1a' }}>
+        {/* Franja superior */}
+        <div className="rounded-t-3xl px-8 pt-10 pb-8 text-center" style={{ background: '#F5C518' }}>
           <div className="text-5xl mb-3">✝️</div>
-          <h1 className="text-2xl font-extrabold tracking-wide" style={{ color: '#D4A017' }}>
+          <h1 className="text-2xl font-extrabold tracking-wide text-white">
             Ministerio de Niños
           </h1>
-          <p className="mt-1 text-sm" style={{ color: '#a0a0a0' }}>
+          <p className="mt-1 text-sm text-yellow-900">
             Portal de acceso para el equipo
           </p>
         </div>
 
-        {/* Formulario sobre fondo blanco */}
-        <div className="bg-white rounded-b-3xl shadow-xl border border-gray-200 px-8 py-8">
+        {/* Formulario */}
+        <div className="bg-white rounded-b-3xl shadow-xl border border-yellow-200 px-8 py-8">
           <h2 className="text-lg font-bold text-gray-800 mb-6">Iniciar sesión</h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <Input
@@ -78,8 +78,8 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={cargando}
-              className="w-full py-3 rounded-xl font-bold text-white transition-colors disabled:opacity-60"
-              style={{ background: cargando ? '#a07810' : '#D4A017' }}
+              className="w-full py-3 rounded-xl font-bold text-white transition-opacity disabled:opacity-60"
+              style={{ background: '#F5C518', color: '#4a2c00' }}
             >
               {cargando ? 'Ingresando...' : 'Ingresar'}
             </button>

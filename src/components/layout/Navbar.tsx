@@ -68,7 +68,7 @@ export default function Navbar() {
             ) : (
               <Link href="/login"
                 className="font-bold px-4 py-1.5 rounded-lg transition-colors text-sm shadow"
-                style={{ background: '#D4A017', color: '#1a1a1a' }}>
+                style={{ background: '#F5C518', color: '#4a2c00' }}>
                 Acceder
               </Link>
             )}
