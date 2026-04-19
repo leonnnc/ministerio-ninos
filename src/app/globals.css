@@ -4,7 +4,7 @@
 
 :root {
   --background: #FFFDE7;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,4 +27,10 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Scroll automático infinito para galería de fotos */
+@keyframes scrollInfinito {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }

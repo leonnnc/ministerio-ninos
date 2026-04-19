@@ -53,8 +53,8 @@ export default function Home() {
         </Link>
       </CarruselFondo>
 
-      {/* ── 2. FOTOS última reunión — fondo amarillo suave ── */}
-      <section className="py-16" style={{ background: '#FFFDE7' }} id="reunion">
+      {/* ── 2. FOTOS última reunión — scroll automático infinito ── */}
+      <section className="py-16 overflow-hidden" style={{ background: '#FFFDE7' }} id="reunion">
         <div className="max-w-6xl mx-auto px-6 mb-8">
           <h2 className="text-3xl font-bold text-center mb-1" style={{ color: '#F57F17' }}>
             Última Reunión Dominical
@@ -62,15 +62,19 @@ export default function Home() {
           <p className="text-center" style={{ color: '#F9A825' }}>Momentos especiales de nuestra familia</p>
         </div>
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+          {/* Degradé izquierdo */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to right, #FFFDE7, transparent)' }} />
-          <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+          {/* Degradé derecho */}
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to left, #FFFDE7, transparent)' }} />
-          <div className="flex gap-4 overflow-x-auto px-16 pb-4 scrollbar-hide snap-x snap-mandatory">
-            {FOTOS_REUNION.map((foto, i) => (
-              <div key={i} className="flex-none w-72 h-52 sm:w-80 sm:h-60 rounded-2xl overflow-hidden shadow-md snap-start border-2 border-yellow-200">
+
+          {/* Pista de scroll infinito — duplicamos las fotos para el loop */}
+          <div className="flex gap-4 pb-2" style={{ animation: 'scrollInfinito 28s linear infinite', width: 'max-content' }}>
+            {[...FOTOS_REUNION, ...FOTOS_REUNION].map((foto, i) => (
+              <div key={i} className="flex-none w-72 h-52 sm:w-80 sm:h-60 rounded-2xl overflow-hidden shadow-md border-2 border-yellow-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={foto.src} alt={foto.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                <img src={foto.src} alt={foto.alt} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -126,7 +130,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-2" style={{ color: '#E65100' }}>Videos del Ministerio</h2>
           <p className="text-center mb-10" style={{ color: '#F57F17' }}>Revive los mejores momentos</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {VIDEOS.map((video, i) => (
               <div key={i} className="rounded-2xl overflow-hidden shadow-md border-2 border-yellow-200"
                 style={{ background: '#FFFDE7' }}>
@@ -139,8 +143,8 @@ export default function Home() {
                     allowFullScreen
                   />
                 </div>
-                <div className="px-4 py-3">
-                  <p className="font-semibold text-sm" style={{ color: '#78350f' }}>{video.titulo}</p>
+                <div className="px-3 py-2">
+                  <p className="font-semibold text-xs" style={{ color: '#78350f' }}>{video.titulo}</p>
                 </div>
               </div>
             ))}
