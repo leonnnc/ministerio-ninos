@@ -345,7 +345,7 @@ export default function FormularioInscripcion({ onExito }: FormularioInscripcion
 
       <Button type="submit" loading={isSubmitting} size="lg" className="w-full"
         style={{ background: '#F5C518', color: '#4a2c00', border: 'none' }}>
-        {isSubmitting ? 'Registrando...' : '✅ Inscribir Niño'}
+        {isSubmitting ? 'Registrando...' : '✅ Inscribir Niño(a)'}
       </Button>
     </form>
   );
