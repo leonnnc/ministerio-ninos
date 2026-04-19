@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -11,10 +11,26 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <nav className="text-white shadow-md" style={{ background: '#F57F17' }} aria-label="Navegación principal">
+    <nav
+      className="sticky top-0 z-50 text-white shadow-md transition-all duration-300"
+      style={{
+        background: scrolled
+          ? 'rgba(245, 127, 23, 0.97)'
+          : '#F57F17',
+        backdropFilter: scrolled ? 'blur(8px)' : 'none',
+      }}
+      aria-label="Navegación principal"
+    >
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo / nombre */}
         <Link href="/" className="text-xl font-bold tracking-wide hover:text-primary-200 transition-colors">
