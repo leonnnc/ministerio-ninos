@@ -14,6 +14,48 @@ export const SERVICIOS_DOMINGO = [
 
 export type ServicioId = typeof SERVICIOS_DOMINGO[number]['id'];
 
+// Programación interna de cada servicio dominical
+export interface ItemProgramacion {
+  hora: string;
+  actividad: string;
+  icono: string;
+}
+
+export const PROGRAMACION_SERVICIO: Record<ServicioId, ItemProgramacion[]> = {
+  '8am': [
+    { hora: '8:00 AM', actividad: 'Recepción de niños',     icono: '🚪' },
+    { hora: '8:10 AM', actividad: 'Alabanza y adoración',   icono: '🎵' },
+    { hora: '8:30 AM', actividad: 'Mensaje bíblico',        icono: '📖' },
+    { hora: '8:55 AM', actividad: 'Actividad creativa',     icono: '🎨' },
+    { hora: '9:15 AM', actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '9:30 AM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
+  ],
+  '11am': [
+    { hora: '11:00 AM', actividad: 'Recepción de niños',    icono: '🚪' },
+    { hora: '11:10 AM', actividad: 'Alabanza y adoración',  icono: '🎵' },
+    { hora: '11:30 AM', actividad: 'Mensaje bíblico',       icono: '📖' },
+    { hora: '11:55 AM', actividad: 'Actividad creativa',    icono: '🎨' },
+    { hora: '12:15 PM', actividad: 'Refrigerio',            icono: '🍎' },
+    { hora: '12:30 PM', actividad: 'Entrega de niños',      icono: '👨‍👩‍👧' },
+  ],
+  '1pm': [
+    { hora: '1:00 PM', actividad: 'Recepción de niños',     icono: '🚪' },
+    { hora: '1:10 PM', actividad: 'Alabanza y adoración',   icono: '🎵' },
+    { hora: '1:30 PM', actividad: 'Mensaje bíblico',        icono: '📖' },
+    { hora: '1:55 PM', actividad: 'Actividad creativa',     icono: '🎨' },
+    { hora: '2:15 PM', actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '2:30 PM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
+  ],
+  '730pm': [
+    { hora: '7:30 PM', actividad: 'Recepción de niños',     icono: '🚪' },
+    { hora: '7:40 PM', actividad: 'Alabanza y adoración',   icono: '🎵' },
+    { hora: '8:00 PM', actividad: 'Mensaje bíblico',        icono: '📖' },
+    { hora: '8:25 PM', actividad: 'Actividad creativa',     icono: '🎨' },
+    { hora: '8:45 PM', actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '9:00 PM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
+  ],
+};
+
 export interface AsignacionServicio {
   id: string;
   fecha: string;

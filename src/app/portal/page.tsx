@@ -302,35 +302,45 @@ export default function PortalPage() {
           )}
         </div>
 
-        {/* Programación */}
+        {/* Programación por servicio */}
         <div>
-          <h2 className="text-xl font-bold mb-4" style={{ color: accentColor }}>Programación</h2>
-          <div className="rounded-2xl border-2 bg-white p-6" style={{ borderColor: '#D97706' }}>
-            <div className="flex items-center gap-3 mb-5">
-              <span className="text-3xl">📅</span>
-              <div>
-                <p className="font-bold text-gray-800">Próximo Domingo</p>
-                <p className="text-sm text-gray-500">Reunión dominical del ministerio</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-              {[
-                { hora: '9:00 AM', actividad: 'Recepción de niños', icono: '🚪' },
-                { hora: '9:15 AM', actividad: 'Alabanza y adoración', icono: '🎵' },
-                { hora: '9:45 AM', actividad: 'Mensaje bíblico', icono: '📖' },
-                { hora: '10:15 AM', actividad: 'Actividad creativa', icono: '🎨' },
-                { hora: '10:45 AM', actividad: 'Refrigerio', icono: '🍎' },
-                { hora: '11:00 AM', actividad: 'Entrega de niños', icono: '👨‍👩‍👧' },
-              ].map((item) => (
-                <div key={item.hora} className="flex items-center gap-2 rounded-xl p-3 border border-amber-100 bg-amber-50">
-                  <span className="text-xl">{item.icono}</span>
+          <h2 className="text-xl font-bold mb-4" style={{ color: accentColor }}>Programación de Servicios</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { id: '8am',   hora: '8:00 AM',  label: 'Primer Servicio',   color: '#F59E0B' },
+              { id: '11am',  hora: '11:00 AM', label: 'Segundo Servicio',  color: '#EA580C' },
+              { id: '1pm',   hora: '1:00 PM',  label: 'Tercer Servicio',   color: '#D97706' },
+              { id: '730pm', hora: '7:30 PM',  label: 'Servicio Nocturno', color: '#B45309' },
+            ].map((s) => (
+              <div key={s.id} className="rounded-2xl border-2 border-yellow-200 bg-white overflow-hidden shadow-sm">
+                <div className="px-4 py-3 flex items-center gap-3" style={{ background: '#FFF9C4' }}>
+                  <div className="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-xs font-bold"
+                    style={{ background: s.color, color: '#fff' }}>
+                    <span>{s.hora.split(' ')[0]}</span>
+                    <span className="opacity-80">{s.hora.split(' ')[1]}</span>
+                  </div>
                   <div>
-                    <p className="font-semibold" style={{ color: '#B45309' }}>{item.hora}</p>
-                    <p className="text-gray-700">{item.actividad}</p>
+                    <p className="font-bold text-sm" style={{ color: '#4a2c00' }}>{s.hora}</p>
+                    <p className="text-xs" style={{ color: '#78350f' }}>{s.label}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+                <div className="px-4 py-3 space-y-1.5">
+                  {[
+                    { hora: `${s.hora.split(':')[0]}:00`, actividad: 'Recepción de niños',   icono: '🚪' },
+                    { hora: `+10 min`,                    actividad: 'Alabanza y adoración', icono: '🎵' },
+                    { hora: `+30 min`,                    actividad: 'Mensaje bíblico',      icono: '📖' },
+                    { hora: `+55 min`,                    actividad: 'Actividad creativa',   icono: '🎨' },
+                    { hora: `+75 min`,                    actividad: 'Refrigerio',           icono: '🍎' },
+                    { hora: `+90 min`,                    actividad: 'Entrega de niños',     icono: '👨‍👩‍👧' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs">
+                      <span className="text-sm">{item.icono}</span>
+                      <span className="text-gray-700">{item.actividad}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

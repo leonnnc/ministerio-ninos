@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores/authStore';
 import {
   useAgendaStore,
   SERVICIOS_DOMINGO,
+  PROGRAMACION_SERVICIO,
   proximosDomingos,
   formatearFechaDomingo,
   type ServicioId,
@@ -156,6 +157,29 @@ export default function AgendaPage() {
                       +
                     </button>
                   )}
+                </div>
+
+                {/* Programación interna del servicio */}
+                <div className="px-4 pb-2">
+                  <details className="group">
+                    <summary className="cursor-pointer text-xs font-semibold py-2 flex items-center gap-1 select-none"
+                      style={{ color: colores.badge }}>
+                      <span className="group-open:rotate-90 transition-transform inline-block">▶</span>
+                      Programación del servicio
+                    </summary>
+                    <div className="mt-2 rounded-xl border p-3 space-y-1.5"
+                      style={{ borderColor: colores.border, background: '#fff' }}>
+                      {PROGRAMACION_SERVICIO[servicio.id].map((item) => (
+                        <div key={item.hora} className="flex items-center gap-2 text-xs">
+                          <span className="text-base">{item.icono}</span>
+                          <span className="font-bold w-16 flex-none" style={{ color: colores.badge }}>
+                            {item.hora}
+                          </span>
+                          <span className="text-gray-700">{item.actividad}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
                 </div>
 
                 {/* Asignaciones */}
