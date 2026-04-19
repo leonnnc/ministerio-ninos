@@ -58,7 +58,8 @@ export default function CarruselFondo({
   if (total === 0) return <>{children}</>;
 
   return (
-    <div className="relative w-full h-screen min-h-[500px] overflow-hidden">
+    // Altura = 100vh menos los 64px del navbar sticky
+    <div className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 64px)', minHeight: '480px' }}>
       {/* Slides */}
       {items.map((item, i) => {
         const esActual = i === actual;
@@ -98,7 +99,7 @@ export default function CarruselFondo({
       })}
 
       {/* Contenido encima del carrusel */}
-      <div className="relative z-20 flex flex-col items-center justify-center h-full px-4 text-center">
+      <div className="relative z-20 flex flex-col items-center justify-center h-full px-4 text-center pb-20">
         {children}
       </div>
 
@@ -109,7 +110,8 @@ export default function CarruselFondo({
           <button
             onClick={anterior_}
             aria-label="Slide anterior"
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+            className="absolute left-3 z-30 bg-black/40 hover:bg-black/60 text-white rounded-full w-11 h-11 flex items-center justify-center transition-colors text-2xl font-bold shadow-lg"
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
           >
             ‹
           </button>
@@ -118,24 +120,39 @@ export default function CarruselFondo({
           <button
             onClick={siguiente}
             aria-label="Slide siguiente"
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+            className="absolute right-3 z-30 bg-black/40 hover:bg-black/60 text-white rounded-full w-11 h-11 flex items-center justify-center transition-colors text-2xl font-bold shadow-lg"
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
           >
             ›
           </button>
 
-          {/* Indicadores (dots) */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+          {/* Indicadores (dots) — posicionados más arriba del borde */}
+          <div className="absolute z-30 flex gap-3" style={{ bottom: '24px', left: '50%', transform: 'translateX(-50%)' }}>
             {items.map((_, i) => (
               <button
                 key={i}
                 onClick={() => irA(i)}
                 aria-label={`Ir al slide ${i + 1}`}
                 className={[
-                  'w-2.5 h-2.5 rounded-full transition-all duration-300',
+                  'w-3 h-3 rounded-full transition-all duration-300 shadow',
                   i === actual ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80',
                 ].join(' ')}
               />
             ))}
+          </div>
+
+          {/* Flecha animada "scroll hacia abajo" */}
+          <div className="absolute z-30 flex flex-col items-center gap-1" style={{ bottom: '60px', left: '50%', transform: 'translateX(-50%)' }}>
+            <span className="text-white/70 text-xs tracking-widest uppercase">Desliza</span>
+            <svg
+              className="w-6 h-6 text-white/80 animate-bounce"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
           </div>
         </>
       )}
