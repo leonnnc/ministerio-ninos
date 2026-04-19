@@ -67,7 +67,8 @@ export default function Navbar() {
               </div>
             ) : (
               <Link href="/login"
-                className="bg-white text-yellow-800 font-bold px-4 py-1.5 rounded-lg hover:bg-yellow-50 transition-colors text-sm shadow">
+                className="font-bold px-4 py-1.5 rounded-lg transition-colors text-sm shadow"
+                style={{ background: '#D4A017', color: '#1a1a1a' }}>
                 Acceder
               </Link>
             )}

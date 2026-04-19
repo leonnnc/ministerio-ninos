@@ -67,13 +67,13 @@ export default function PortalPage() {
 
   // Colores según rol: admin/maestros = formal ámbar oscuro, resto = alegre amarillo
   const esRolFormal = esAdmin || esMaestro;
-  const headerBg = esRolFormal ? '#B45309' : '#FFD600';
-  const headerTexto = esRolFormal ? '#fff' : '#4a2c00';
-  const headerSubtexto = esRolFormal ? '#fde68a' : '#78350f';
-  const fondoPagina = esRolFormal ? '#fffbf0' : '#FFFDE7';
-  const accentColor = esRolFormal ? '#92400e' : '#E65100';
-  const salonHeaderBg = esRolFormal ? '#B45309' : '#FFD600';
-  const salonHeaderTexto = esRolFormal ? '#fff' : '#4a2c00';
+  const headerBg = esRolFormal ? '#1a1a1a' : '#FFD600';
+  const headerTexto = esRolFormal ? '#D4A017' : '#4a2c00';
+  const headerSubtexto = esRolFormal ? '#a0a0a0' : '#78350f';
+  const fondoPagina = esRolFormal ? '#f5f5f5' : '#FFFDE7';
+  const accentColor = esRolFormal ? '#D4A017' : '#E65100';
+  const salonHeaderBg = esRolFormal ? '#1a1a1a' : '#FFD600';
+  const salonHeaderTexto = esRolFormal ? '#D4A017' : '#4a2c00';
 
   return (
     <div className="min-h-screen" style={{ background: fondoPagina }}>
@@ -93,8 +93,8 @@ export default function PortalPage() {
             onClick={handleCerrarSesion}
             className="px-4 py-2 rounded-xl text-sm font-semibold border-2 transition-colors"
             style={{
-              borderColor: esRolFormal ? '#fde68a' : '#4a2c00',
-              color: esRolFormal ? '#fde68a' : '#4a2c00',
+              borderColor: esRolFormal ? '#D4A017' : '#4a2c00',
+              color: esRolFormal ? '#D4A017' : '#4a2c00',
               background: 'transparent',
             }}
           >
@@ -151,7 +151,7 @@ export default function PortalPage() {
                   <div key={salon.id} className="rounded-2xl border-2 bg-white shadow-sm overflow-hidden" style={{ borderColor: '#D97706' }}>
                     <div className="px-5 py-4" style={{ background: salonHeaderBg }}>
                       <h3 className="text-lg font-bold" style={{ color: salonHeaderTexto }}>{salon.nombre}</h3>
-                      <p className="text-sm" style={{ color: esRolFormal ? '#fde68a' : '#78350f' }}>
+                      <p className="text-sm" style={{ color: esRolFormal ? '#a0a0a0' : '#78350f' }}>
                         {salon.edadMinima} – {salon.edadMaxima} años
                       </p>
                     </div>
