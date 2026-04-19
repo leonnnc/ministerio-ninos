@@ -6,10 +6,10 @@ import {
 } from '@/lib/firestore/agendaService';
 
 export const SERVICIOS_DOMINGO = [
-  { id: '8am',   hora: '8:00 AM',  label: 'Primer Servicio'   },
-  { id: '11am',  hora: '11:00 AM', label: 'Segundo Servicio'  },
-  { id: '1pm',   hora: '1:00 PM',  label: 'Tercer Servicio'   },
-  { id: '730pm', hora: '7:30 PM',  label: 'Servicio Nocturno' },
+  { id: '8am',   hora: '8:00 AM',  label: 'Primer Servicio',   rango: '8:00 AM – 10:50 AM'  },
+  { id: '11am',  hora: '11:00 AM', label: 'Segundo Servicio',  rango: '11:00 AM – 12:50 PM' },
+  { id: '1pm',   hora: '1:00 PM',  label: 'Tercer Servicio',   rango: '1:00 PM – 7:20 PM'   },
+  { id: '730pm', hora: '7:30 PM',  label: 'Servicio Nocturno', rango: '7:30 PM – 9:00 PM'   },
 ] as const;
 
 export type ServicioId = typeof SERVICIOS_DOMINGO[number]['id'];
@@ -23,36 +23,40 @@ export interface ItemProgramacion {
 
 export const PROGRAMACION_SERVICIO: Record<ServicioId, ItemProgramacion[]> = {
   '8am': [
-    { hora: '8:00 AM', actividad: 'Recepción de niños',     icono: '🚪' },
-    { hora: '8:10 AM', actividad: 'Alabanza y adoración',   icono: '🎵' },
-    { hora: '8:30 AM', actividad: 'Mensaje bíblico',        icono: '📖' },
-    { hora: '8:55 AM', actividad: 'Actividad creativa',     icono: '🎨' },
-    { hora: '9:15 AM', actividad: 'Refrigerio',             icono: '🍎' },
-    { hora: '9:30 AM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
+    { hora: '8:00 AM',  actividad: 'Recepción de niños',     icono: '🚪' },
+    { hora: '8:15 AM',  actividad: 'Alabanza y adoración',   icono: '🎵' },
+    { hora: '8:45 AM',  actividad: 'Mensaje bíblico',        icono: '📖' },
+    { hora: '9:15 AM',  actividad: 'Actividad creativa',     icono: '🎨' },
+    { hora: '9:50 AM',  actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '10:20 AM', actividad: 'Oración y cierre',       icono: '🙏' },
+    { hora: '10:50 AM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
   ],
   '11am': [
-    { hora: '11:00 AM', actividad: 'Recepción de niños',    icono: '🚪' },
-    { hora: '11:10 AM', actividad: 'Alabanza y adoración',  icono: '🎵' },
-    { hora: '11:30 AM', actividad: 'Mensaje bíblico',       icono: '📖' },
-    { hora: '11:55 AM', actividad: 'Actividad creativa',    icono: '🎨' },
-    { hora: '12:15 PM', actividad: 'Refrigerio',            icono: '🍎' },
-    { hora: '12:30 PM', actividad: 'Entrega de niños',      icono: '👨‍👩‍👧' },
+    { hora: '11:00 AM', actividad: 'Recepción de niños',     icono: '🚪' },
+    { hora: '11:15 AM', actividad: 'Alabanza y adoración',   icono: '🎵' },
+    { hora: '11:45 AM', actividad: 'Mensaje bíblico',        icono: '📖' },
+    { hora: '12:15 PM', actividad: 'Actividad creativa',     icono: '🎨' },
+    { hora: '12:30 PM', actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '12:40 PM', actividad: 'Oración y cierre',       icono: '🙏' },
+    { hora: '12:50 PM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
   ],
   '1pm': [
-    { hora: '1:00 PM', actividad: 'Recepción de niños',     icono: '🚪' },
-    { hora: '1:10 PM', actividad: 'Alabanza y adoración',   icono: '🎵' },
-    { hora: '1:30 PM', actividad: 'Mensaje bíblico',        icono: '📖' },
-    { hora: '1:55 PM', actividad: 'Actividad creativa',     icono: '🎨' },
-    { hora: '2:15 PM', actividad: 'Refrigerio',             icono: '🍎' },
-    { hora: '2:30 PM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
+    { hora: '1:00 PM',  actividad: 'Recepción de niños',     icono: '🚪' },
+    { hora: '1:15 PM',  actividad: 'Alabanza y adoración',   icono: '🎵' },
+    { hora: '1:45 PM',  actividad: 'Mensaje bíblico',        icono: '📖' },
+    { hora: '2:15 PM',  actividad: 'Actividad creativa',     icono: '🎨' },
+    { hora: '2:50 PM',  actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '3:10 PM',  actividad: 'Oración y cierre',       icono: '🙏' },
+    { hora: '7:20 PM',  actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
   ],
   '730pm': [
-    { hora: '7:30 PM', actividad: 'Recepción de niños',     icono: '🚪' },
-    { hora: '7:40 PM', actividad: 'Alabanza y adoración',   icono: '🎵' },
-    { hora: '8:00 PM', actividad: 'Mensaje bíblico',        icono: '📖' },
-    { hora: '8:25 PM', actividad: 'Actividad creativa',     icono: '🎨' },
-    { hora: '8:45 PM', actividad: 'Refrigerio',             icono: '🍎' },
-    { hora: '9:00 PM', actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
+    { hora: '7:30 PM',  actividad: 'Recepción de niños',     icono: '🚪' },
+    { hora: '7:45 PM',  actividad: 'Alabanza y adoración',   icono: '🎵' },
+    { hora: '8:10 PM',  actividad: 'Mensaje bíblico',        icono: '📖' },
+    { hora: '8:40 PM',  actividad: 'Actividad creativa',     icono: '🎨' },
+    { hora: '8:50 PM',  actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '8:55 PM',  actividad: 'Oración y cierre',       icono: '🙏' },
+    { hora: '9:00 PM',  actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
   ],
 };
 

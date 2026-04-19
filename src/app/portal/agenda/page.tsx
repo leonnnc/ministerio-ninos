@@ -139,7 +139,7 @@ export default function AgendaPage() {
                         {servicio.hora}
                       </p>
                       <p className="text-xs font-medium" style={{ color: '#78350f' }}>
-                        {servicio.label}
+                        {servicio.label} · {servicio.rango}
                       </p>
                     </div>
                   </div>
