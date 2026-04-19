@@ -86,6 +86,17 @@ export default function PortalPage() {
 
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
 
+        {/* Acceso rápido a Agenda — visible para todos */}
+        <Link href="/portal/agenda"
+          className="flex items-center gap-4 rounded-2xl border-2 border-yellow-300 bg-white p-5 hover:shadow-md transition-shadow">
+          <span className="text-4xl">📅</span>
+          <div>
+            <p className="font-bold text-gray-800">Agenda Dominical</p>
+            <p className="text-sm text-gray-500">Ver programación de servicios y asignaciones</p>
+          </div>
+          <span className="ml-auto text-yellow-500 text-xl">→</span>
+        </Link>
+
         {/* Admin: acceso rápido al panel completo */}
         {esAdmin && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
