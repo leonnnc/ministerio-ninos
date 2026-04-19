@@ -10,15 +10,47 @@ export type RelacionApoderado = 'padre' | 'madre' | 'tutor';
 // Sexo del alumno
 export type Sexo = 'masculino' | 'femenino';
 
+// Tipo de sangre
+export type TipoSangre = 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-' | 'desconocido';
+
+// Seguro médico
+export type SeguroMedico = 'SIS' | 'EsSalud' | 'privado' | 'ninguno';
+
+// Servicio habitual
+export type ServicioHabitual = '8am' | '11am' | '1pm' | '730pm';
+
 export interface Alumno {
-  id: string;                   // UUID generado al registrar
+  id: string;
   nombreCompleto: string;
-  fechaNacimiento: string;      // ISO 8601: "YYYY-MM-DD"
+  fechaNacimiento: string;        // ISO 8601: "YYYY-MM-DD"
   sexo: Sexo;
-  fotografiaUrl?: string;       // Base64 o URL de objeto local
-  salonId: string;              // Referencia al Salon asignado
-  apoderadoId: string;          // Referencia al Apoderado
-  fechaRegistro: string;        // ISO 8601 timestamp
+  fotografiaUrl?: string;
+  salonId: string;
+  apoderadoId: string;
+  fechaRegistro: string;
+  codigoQR?: string;              // Código único para check-in/out
+
+  // Información médica
+  alergias?: string;
+  condicionesMedicas?: string;
+  medicamentos?: string;
+  restriccionesAlimentarias?: string;
+  tipoSangre?: TipoSangre;
+  seguroMedico?: SeguroMedico;
+  hospitalPreferencia?: string;
+  tieneDiscapacidad?: boolean;
+  detalleDiscapacidad?: string;
+
+  // Información espiritual
+  esBautizado?: boolean;
+  haAceptadoCristo?: boolean;
+  primeraVez?: boolean;
+  asistenciaRegular?: boolean;
+  comoSeEntero?: string;
+
+  // Información escolar
+  colegio?: string;
+  grado?: string;
 }
 
 export interface Apoderado {
@@ -26,17 +58,28 @@ export interface Apoderado {
   nombreCompleto: string;
   relacion: RelacionApoderado;
   telefono: string;
+  telefonoEmergencia?: string;    // Segundo contacto
+  nombreEmergencia?: string;      // Nombre del segundo contacto
   email: string;
+  direccion?: string;
+  distrito?: string;
+  departamento?: string;
+  esMiembroIglesia?: boolean;
+  servicioHabitual?: ServicioHabitual;
+  whatsapp?: string;
+
+  // Personas autorizadas para recoger al niño
+  personasAutorizadas?: string;   // Nombres separados por coma
 }
 
 export interface Salon {
   id: string;
-  nombre: string;               // Ej: "Grupo Cuna", "Grupo Preescolar"
+  nombre: string;
   grupoEdad: GrupoEdad;
-  edadMinima: number;           // En años
-  edadMaxima: number;           // En años
-  maestroId?: string;           // Referencia al Personal con rol Maestro
-  auxiliaresIds: string[];      // Referencias a Personal con rol Auxiliar
+  edadMinima: number;
+  edadMaxima: number;
+  maestroId?: string;
+  auxiliaresIds: string[];
 }
 
 export interface Personal {
@@ -45,6 +88,19 @@ export interface Personal {
   rol: Rol;
   telefono: string;
   email: string;
-  salonesIds: string[];         // Salones asignados (para Maestros/Coordinadoras)
-  maestroAsignadoId?: string;   // Solo para Auxiliares: maestro al que apoyan
+  salonesIds: string[];
+  maestroAsignadoId?: string;
+}
+
+// Registro de ingreso/salida de niños
+export interface RegistroAsistencia {
+  id: string;
+  alumnoId: string;
+  fecha: string;                  // ISO "YYYY-MM-DD"
+  servicioId: string;             // '8am' | '11am' | '1pm' | '730pm'
+  horaIngreso?: string;           // ISO timestamp
+  horaSalida?: string;            // ISO timestamp
+  registradoPorIngreso?: string;  // ID del personal que registró ingreso
+  registradoPorSalida?: string;   // ID del personal que registró salida
+  estado: 'pendiente' | 'presente' | 'entregado';
 }
