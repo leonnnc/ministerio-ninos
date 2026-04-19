@@ -28,7 +28,7 @@ const rolColor: Record<Rol, 'primary' | 'success' | 'info' | 'secondary' | 'warn
 
 export default function PortalPage() {
   const router = useRouter();
-  const { usuarioActual, estaAutenticado, cerrarSesion } = useAuthStore();
+  const { usuarioActual, estaAutenticado } = useAuthStore();
   const alumnos = useAlumnosStore((s) => s.alumnos);
   const apoderados = useAlumnosStore((s) => s.apoderados);
   const salones = useSalonesStore((s) => s.salones);
@@ -60,16 +60,9 @@ export default function PortalPage() {
         return false;
       });
 
-  function handleCerrarSesion() {
-    cerrarSesion();
-    router.push('/');
-  }
-
-  // Colores según rol: admin/maestros = formal ámbar oscuro, resto = alegre amarillo
+  // Colores según rol
   const esRolFormal = esAdmin || esMaestro;
   const headerBg = esRolFormal ? '#F5C518' : '#FFD600';
-  const headerTexto = '#4a2c00';
-  const headerSubtexto = '#78350f';
   const fondoPagina = '#FFFDE7';
   const accentColor = '#92400e';
   const salonHeaderBg = esRolFormal ? '#F5C518' : '#FFD600';
@@ -77,29 +70,17 @@ export default function PortalPage() {
 
   return (
     <div className="min-h-screen" style={{ background: fondoPagina }}>
-      {/* Header del portal */}
-      <div className="px-6 py-8" style={{ background: headerBg }}>
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <p className="text-sm font-medium mb-1" style={{ color: headerSubtexto }}>Bienvenido/a</p>
-            <h1 className="text-2xl font-extrabold" style={{ color: headerTexto }}>
-              {usuarioActual.nombreCompleto}
-            </h1>
-            <div className="mt-2">
-              <Badge label={rolLabel[usuarioActual.rol]} variant={rolColor[usuarioActual.rol]} />
-            </div>
-          </div>
-          <button
-            onClick={handleCerrarSesion}
-            className="px-4 py-2 rounded-xl text-sm font-semibold border-2 transition-colors"
-            style={{
-              borderColor: '#92400e',
-              color: '#92400e',
-              background: 'transparent',
-            }}
-          >
-            Cerrar sesión
-          </button>
+
+      {/* ── BIENVENIDA CENTRADA ── */}
+      <div className="w-full py-12 px-6 text-center" style={{ background: headerBg }}>
+        <p className="text-sm font-medium tracking-widest uppercase mb-2" style={{ color: '#78350f' }}>
+          ¡Bienvenido/a al portal!
+        </p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold" style={{ color: '#4a2c00' }}>
+          {usuarioActual.nombreCompleto}
+        </h1>
+        <div className="flex justify-center mt-3">
+          <Badge label={rolLabel[usuarioActual.rol]} variant={rolColor[usuarioActual.rol]} />
         </div>
       </div>
 
