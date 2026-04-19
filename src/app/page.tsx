@@ -1,4 +1,29 @@
+'use client';
+
 import Link from "next/link";
+import CarruselFondo, { type MediaItem } from "@/components/ui/CarruselFondo";
+
+// ─── Agrega aquí tus imágenes y videos ───────────────────────────────────────
+// Coloca los archivos en la carpeta /public/media/ y referencia así:
+// { tipo: 'imagen', src: '/media/foto1.jpg', alt: 'Descripción' }
+// { tipo: 'video',  src: '/media/video1.mp4' }
+const MEDIA_CARRUSEL: MediaItem[] = [
+  {
+    tipo: 'imagen',
+    src: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80',
+    alt: 'Niños en el ministerio',
+  },
+  {
+    tipo: 'imagen',
+    src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1600&q=80',
+    alt: 'Niños aprendiendo',
+  },
+  {
+    tipo: 'imagen',
+    src: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=1600&q=80',
+    alt: 'Comunidad infantil',
+  },
+];
 
 const grupos = [
   {
@@ -46,12 +71,12 @@ const jerarquia = [
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-primary-700 via-primary-600 to-primary-500 text-white py-24 px-6 text-center">
-        <h1 className="text-5xl font-extrabold mb-4 drop-shadow-lg">
+      {/* Hero con carrusel de fondo */}
+      <CarruselFondo items={MEDIA_CARRUSEL} intervalo={6000}>
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-lg mb-4">
           ✝️ Ministerio de Niños
         </h1>
-        <p className="text-xl text-primary-100 max-w-2xl mx-auto mb-10">
+        <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-10 drop-shadow">
           Formando el corazón de los niños con amor, fe y propósito. Bienvenido
           al sistema de gestión e inscripción de nuestro ministerio.
         </p>
@@ -69,7 +94,7 @@ export default function Home() {
             Panel de Administración
           </Link>
         </div>
-      </section>
+      </CarruselFondo>
 
       {/* Grupos / Salones */}
       <section className="py-16 px-6 bg-gray-50">
