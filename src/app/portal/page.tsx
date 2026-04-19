@@ -8,7 +8,7 @@ import { useAlumnosStore } from '@/stores/alumnosStore';
 import { useSalonesStore } from '@/stores/salonesStore';
 import { usePersonalStore } from '@/stores/personalStore';
 import { Badge } from '@/components/ui';
-import { useAgendaStore, SERVICIOS_DOMINGO, proximosDomingos, formatearFechaDomingo } from '@/stores/agendaStore';
+import { useAgendaStore, SERVICIOS_DOMINGO, PROGRAMACION_SERVICIO, proximosDomingos, formatearFechaDomingo } from '@/stores/agendaStore';
 import type { Rol } from '@/types';
 
 const rolLabel: Record<Rol, string> = {
@@ -306,35 +306,24 @@ export default function PortalPage() {
         <div>
           <h2 className="text-xl font-bold mb-4" style={{ color: accentColor }}>Programación de Servicios</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { id: '8am',   hora: '8:00 AM',  label: 'Primer Servicio',   color: '#F59E0B' },
-              { id: '11am',  hora: '11:00 AM', label: 'Segundo Servicio',  color: '#EA580C' },
-              { id: '1pm',   hora: '1:00 PM',  label: 'Tercer Servicio',   color: '#D97706' },
-              { id: '730pm', hora: '7:30 PM',  label: 'Servicio Nocturno', color: '#B45309' },
-            ].map((s) => (
+            {SERVICIOS_DOMINGO.map((s) => (
               <div key={s.id} className="rounded-2xl border-2 border-yellow-200 bg-white overflow-hidden shadow-sm">
                 <div className="px-4 py-3 flex items-center gap-3" style={{ background: '#FFF9C4' }}>
                   <div className="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-xs font-bold"
-                    style={{ background: s.color, color: '#fff' }}>
+                    style={{ background: '#F5C518', color: '#4a2c00' }}>
                     <span>{s.hora.split(' ')[0]}</span>
                     <span className="opacity-80">{s.hora.split(' ')[1]}</span>
                   </div>
                   <div>
                     <p className="font-bold text-sm" style={{ color: '#4a2c00' }}>{s.hora}</p>
-                    <p className="text-xs" style={{ color: '#78350f' }}>{s.label}</p>
+                    <p className="text-xs" style={{ color: '#78350f' }}>{s.label} · {s.rango}</p>
                   </div>
                 </div>
                 <div className="px-4 py-3 space-y-1.5">
-                  {[
-                    { hora: `${s.hora.split(':')[0]}:00`, actividad: 'Recepción de niños',   icono: '🚪' },
-                    { hora: `+10 min`,                    actividad: 'Alabanza y adoración', icono: '🎵' },
-                    { hora: `+30 min`,                    actividad: 'Mensaje bíblico',      icono: '📖' },
-                    { hora: `+55 min`,                    actividad: 'Actividad creativa',   icono: '🎨' },
-                    { hora: `+75 min`,                    actividad: 'Refrigerio',           icono: '🍎' },
-                    { hora: `+90 min`,                    actividad: 'Entrega de niños',     icono: '👨‍👩‍👧' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs">
+                  {PROGRAMACION_SERVICIO[s.id].map((item) => (
+                    <div key={item.hora} className="flex items-center gap-2 text-xs">
                       <span className="text-sm">{item.icono}</span>
+                      <span className="font-semibold w-16 flex-none" style={{ color: '#D97706' }}>{item.hora}</span>
                       <span className="text-gray-700">{item.actividad}</span>
                     </div>
                   ))}

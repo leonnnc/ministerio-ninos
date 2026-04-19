@@ -41,7 +41,7 @@ export default function InscripcionPage() {
     }
 
     const alumnoConSalon: Alumno = { ...alumno, salonId: salon.id };
-    agregarAlumno(alumnoConSalon, apoderado);
+    await agregarAlumno(alumnoConSalon, apoderado);
 
     router.push(`/confirmacion?alumnoId=${alumnoConSalon.id}`);
   }

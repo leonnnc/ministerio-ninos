@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { usePersonalStore } from '@/stores/personalStore';
 import { useAlumnosStore } from '@/stores/alumnosStore';
 import { useSalonesStore } from '@/stores/salonesStore';
 import { useAgendaStore, proximosDomingos, SERVICIOS_DOMINGO } from '@/stores/agendaStore';
+import { useAuthStore } from '@/stores/authStore';
 import type { Personal, Alumno, Apoderado } from '@/types';
 
 const MAESTROS_DEMO: { nombre: string; email: string }[] = [
@@ -120,6 +121,7 @@ const NINOS_DEMO = [
 
 export default function DemoPage() {
   const router = useRouter();
+  const { usuarioActual, estaAutenticado } = useAuthStore();
   const { agregarPersonal } = usePersonalStore();
   const { agregarAlumno } = useAlumnosStore();
   const { inicializarSalones, asignarMaestro } = useSalonesStore();
@@ -130,6 +132,12 @@ export default function DemoPage() {
   const [log, setLog] = useState<string[]>([]);
   const [mostrarCredenciales, setMostrarCredenciales] = useState(false);
 
+  // Proteger ruta — solo admin puede acceder
+  useEffect(() => {
+    if (!estaAutenticado) { router.replace('/login'); return; }
+    const esAdmin = usuarioActual?.rol === 'Director_General' || usuarioActual?.rol === 'Lider_General';
+    if (!esAdmin) router.replace('/portal');
+  }, [estaAutenticado, usuarioActual, router]);
   function addLog(msg: string) {
     setLog((prev) => [...prev, msg]);
   }

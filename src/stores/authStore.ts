@@ -2,11 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Personal, Rol } from '@/types';
 
-// Credenciales del admin maestro (Director General)
-// En producción esto vendría de un backend seguro
+// Credenciales del admin — usar variables de entorno en producción
 export const ADMIN_MAESTRO = {
-  email: 'admin@ministerio.com',
-  password: 'admin123',
+  email: process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? 'admin@ministerio.com',
+  password: process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? 'admin123',
   rol: 'Director_General' as Rol,
   nombreCompleto: 'Administrador General',
   id: 'admin-maestro',

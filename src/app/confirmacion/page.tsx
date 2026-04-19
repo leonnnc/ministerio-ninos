@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAlumnosStore } from '@/stores/alumnosStore';
@@ -18,6 +18,23 @@ function ConfirmacionContent() {
   const salones = useSalonesStore((s) => s.salones);
 
   const [descargando, setDescargando] = useState(false);
+  // Esperar hasta 5 segundos a que Firestore cargue los datos
+  const [esperando, setEsperando] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setEsperando(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Si aún esperando y no hay alumno, mostrar spinner
+  if (esperando && !alumno) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-6">
+        <Spinner size="lg" />
+        <p className="text-gray-500 text-sm">Cargando datos del registro...</p>
+      </div>
+    );
+  }
 
   if (!alumno) {
     return (
