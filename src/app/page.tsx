@@ -3,10 +3,8 @@
 import Link from "next/link";
 import CarruselFondo, { type MediaItem } from "@/components/ui/CarruselFondo";
 
-// ─── Agrega aquí tus imágenes y videos ───────────────────────────────────────
-// Coloca los archivos en la carpeta /public/media/ y referencia así:
-// { tipo: 'imagen', src: '/media/foto1.jpg', alt: 'Descripción' }
-// { tipo: 'video',  src: '/media/video1.mp4' }
+// ─── Carrusel hero ────────────────────────────────────────────────────────────
+// Reemplaza con tus propios archivos en /public/media/
 const MEDIA_CARRUSEL: MediaItem[] = [
   {
     tipo: 'imagen',
@@ -25,86 +23,145 @@ const MEDIA_CARRUSEL: MediaItem[] = [
   },
 ];
 
-const grupos = [
-  {
-    nombre: "Cuna",
-    rango: "0 – 2 años",
-    emoji: "🍼",
-    bg: "bg-pink-100",
-    border: "border-pink-300",
-    text: "text-pink-700",
-  },
-  {
-    nombre: "Preescolar",
-    rango: "3 – 5 años",
-    emoji: "🎨",
-    bg: "bg-yellow-100",
-    border: "border-yellow-300",
-    text: "text-yellow-700",
-  },
-  {
-    nombre: "Primaria Baja",
-    rango: "6 – 10 años",
-    emoji: "📚",
-    bg: "bg-green-100",
-    border: "border-green-300",
-    text: "text-green-700",
-  },
-  {
-    nombre: "Primaria Alta",
-    rango: "11 – 13 años",
-    emoji: "🌟",
-    bg: "bg-blue-100",
-    border: "border-blue-300",
-    text: "text-blue-700",
-  },
+// ─── Fotos última reunión dominical ──────────────────────────────────────────
+// Reemplaza con tus fotos reales en /public/media/reunion/
+const FOTOS_REUNION = [
+  { src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80', alt: 'Reunión 1' },
+  { src: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&q=80', alt: 'Reunión 2' },
+  { src: 'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=600&q=80', alt: 'Reunión 3' },
+  { src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80', alt: 'Reunión 4' },
+  { src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=600&q=80', alt: 'Reunión 5' },
+  { src: 'https://images.unsplash.com/photo-1526976668912-1a811878dd37?w=600&q=80', alt: 'Reunión 6' },
 ];
 
-const jerarquia = [
-  { rol: "Director General", emoji: "👑", descripcion: "Visión y dirección del ministerio" },
-  { rol: "Líder General", emoji: "🎯", descripcion: "Coordinación operativa general" },
-  { rol: "Coordinadoras", emoji: "📋", descripcion: "Gestión de grupos y salones" },
-  { rol: "Maestros", emoji: "🏫", descripcion: "Enseñanza y formación de los niños" },
-  { rol: "Auxiliares", emoji: "🤝", descripcion: "Apoyo y cuidado en cada salón" },
+// ─── Videos del ministerio ────────────────────────────────────────────────────
+// Reemplaza con tus videos reales. Puedes usar URLs de YouTube embed o /public/media/
+const VIDEOS = [
+  { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', titulo: 'Alabanza dominical' },
+  { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', titulo: 'Mensaje para los niños' },
+  { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', titulo: 'Actividades especiales' },
+  { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', titulo: 'Testimonio de familias' },
+];
+
+const grupos = [
+  { nombre: 'Cuna', rango: '0 – 2 años', emoji: '🍼', bg: 'bg-pink-100', border: 'border-pink-300', text: 'text-pink-700' },
+  { nombre: 'Preescolar', rango: '3 – 5 años', emoji: '🎨', bg: 'bg-yellow-100', border: 'border-yellow-300', text: 'text-yellow-700' },
+  { nombre: 'Primaria Baja', rango: '6 – 10 años', emoji: '📚', bg: 'bg-green-100', border: 'border-green-300', text: 'text-green-700' },
+  { nombre: 'Primaria Alta', rango: '11 – 13 años', emoji: '🌟', bg: 'bg-blue-100', border: 'border-blue-300', text: 'text-blue-700' },
 ];
 
 export default function Home() {
   return (
     <>
-      {/* Hero con carrusel de fondo */}
+      {/* ── 1. HERO con carrusel de fondo ── */}
       <CarruselFondo items={MEDIA_CARRUSEL} intervalo={6000}>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-lg mb-4">
           ✝️ Ministerio de Niños
         </h1>
         <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-10 drop-shadow">
-          Formando el corazón de los niños con amor, fe y propósito. Bienvenido
-          al sistema de gestión e inscripción de nuestro ministerio.
+          Formando el corazón de los niños con amor, fe y propósito.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/inscripcion"
-            className="bg-accent-400 hover:bg-accent-500 text-primary-900 font-bold px-8 py-3 rounded-xl shadow-lg transition-colors text-lg"
-          >
-            Inscribir a mi hijo
-          </Link>
-          <Link
-            href="/admin"
-            className="bg-white/20 hover:bg-white/30 border border-white text-white font-bold px-8 py-3 rounded-xl shadow-lg transition-colors text-lg"
-          >
-            Panel de Administración
-          </Link>
-        </div>
+        <Link
+          href="/inscripcion"
+          className="bg-accent-400 hover:bg-accent-500 text-primary-900 font-bold px-8 py-3 rounded-xl shadow-lg transition-colors text-lg"
+        >
+          Inscribir a mi hijo
+        </Link>
       </CarruselFondo>
 
-      {/* Grupos / Salones */}
-      <section className="py-16 px-6 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
+      {/* ── 2. SCROLL DE FOTOS última reunión dominical ── */}
+      <section className="py-16 bg-white" id="reunion">
+        <div className="max-w-6xl mx-auto px-6 mb-8">
           <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">
-            Nuestros Grupos
+            Última Reunión Dominical
           </h2>
-          <p className="text-center text-gray-500 mb-10">
-            Cada niño en el salón perfecto para su edad
-          </p>
+          <p className="text-center text-gray-500">Momentos especiales de nuestra familia</p>
+        </div>
+
+        {/* Scroll horizontal con efecto degradé en los bordes */}
+        <div className="relative">
+          {/* Degradé izquierdo */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+          {/* Degradé derecho */}
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+          <div className="flex gap-4 overflow-x-auto px-16 pb-4 scrollbar-hide snap-x snap-mandatory">
+            {FOTOS_REUNION.map((foto, i) => (
+              <div
+                key={i}
+                className="flex-none w-72 h-52 sm:w-80 sm:h-60 rounded-2xl overflow-hidden shadow-md snap-start"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={foto.src}
+                  alt={foto.alt}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. HISTORIA, VISIÓN Y MISIÓN ── */}
+      <section
+        id="historia"
+        className="relative py-20 px-6 overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #4c1d95 0%, #6d28d9 40%, #7c3aed 70%, #a78bfa 100%)',
+        }}
+      >
+        {/* Círculos decorativos de fondo */}
+        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-white/5" />
+        <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-white/5" />
+
+        <div className="relative max-w-5xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white text-center mb-16">
+            Nuestra Historia
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Historia */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div className="text-4xl mb-4 text-center">📖</div>
+              <h3 className="text-xl font-bold text-white text-center mb-3">Cómo Empezamos</h3>
+              <p className="text-white/80 text-sm leading-relaxed text-center">
+                Nació de un sueño: ver a cada niño conocer el amor de Dios. Con un pequeño grupo
+                de familias comprometidas, comenzamos a construir un espacio seguro donde los
+                niños pudieran crecer en fe, valores y comunidad.
+              </p>
+            </div>
+
+            {/* Visión */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div className="text-4xl mb-4 text-center">🔭</div>
+              <h3 className="text-xl font-bold text-white text-center mb-3">Nuestra Visión</h3>
+              <p className="text-white/80 text-sm leading-relaxed text-center">
+                Ser un ministerio de referencia que forme niños con carácter, identidad y propósito,
+                preparándolos para ser líderes que transformen su generación con los valores
+                del Reino de Dios.
+              </p>
+            </div>
+
+            {/* Misión */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <div className="text-4xl mb-4 text-center">🎯</div>
+              <h3 className="text-xl font-bold text-white text-center mb-3">Nuestra Misión</h3>
+              <p className="text-white/80 text-sm leading-relaxed text-center">
+                Enseñar la Palabra de Dios de manera creativa y relevante, crear un ambiente de
+                amor y pertenencia, y acompañar a cada familia en el proceso de formación
+                espiritual de sus hijos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. GRUPOS ── */}
+      <section className="py-16 px-6 bg-gray-50" id="grupos">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">Nuestros Grupos</h2>
+          <p className="text-center text-gray-500 mb-10">Cada niño en el salón perfecto para su edad</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {grupos.map((g) => (
               <div
@@ -120,31 +177,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Jerarquía */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">
-            Equipo del Ministerio
-          </h2>
-          <p className="text-center text-gray-500 mb-10">
-            Personas comprometidas sirviendo con excelencia
-          </p>
-          <ol className="relative border-l-4 border-primary-200 space-y-8 pl-8">
-            {jerarquia.map((item, i) => (
-              <li key={item.rol} className="relative">
-                <span className="absolute -left-[2.35rem] flex items-center justify-center w-10 h-10 rounded-full bg-primary-100 border-2 border-primary-400 text-xl">
-                  {item.emoji}
-                </span>
-                <div className="bg-primary-50 rounded-xl p-4 shadow-sm">
-                  <span className="text-xs font-semibold text-primary-400 uppercase tracking-widest">
-                    Nivel {i + 1}
-                  </span>
-                  <h3 className="text-lg font-bold text-primary-800">{item.rol}</h3>
-                  <p className="text-gray-500 text-sm">{item.descripcion}</p>
+      {/* ── 5. VIDEOS DEL MINISTERIO ── */}
+      <section className="py-16 px-6 bg-white" id="videos">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-primary-800 text-center mb-2">Videos del Ministerio</h2>
+          <p className="text-center text-gray-500 mb-10">Revive los mejores momentos</p>
+
+          {/* 2 filas de 2 columnas en desktop, 1 columna en móvil */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {VIDEOS.map((video, i) => (
+              <div key={i} className="rounded-2xl overflow-hidden shadow-md bg-gray-100">
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    src={video.src}
+                    title={video.titulo}
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </div>
-              </li>
+                <div className="px-4 py-3">
+                  <p className="font-semibold text-gray-800 text-sm">{video.titulo}</p>
+                </div>
+              </div>
             ))}
-          </ol>
+          </div>
         </div>
       </section>
     </>
