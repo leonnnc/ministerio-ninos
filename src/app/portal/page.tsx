@@ -36,6 +36,7 @@ export default function PortalPage() {
   const inicializarSalones = useSalonesStore((s) => s.inicializarSalones);
   const { obtenerPorFechaYServicio } = useAgendaStore();
   const proximoDomingo = proximosDomingos(1)[0] ?? '';
+  const personal = usePersonalStore((s) => s.personal);
 
   useEffect(() => {
     inicializarSalones();
