@@ -8,7 +8,7 @@ import {
 export const SERVICIOS_DOMINGO = [
   { id: '8am',   hora: '8:00 AM',  label: 'Primer Servicio',   rango: '8:00 AM – 10:50 AM'  },
   { id: '11am',  hora: '11:00 AM', label: 'Segundo Servicio',  rango: '11:00 AM – 12:50 PM' },
-  { id: '1pm',   hora: '1:00 PM',  label: 'Tercer Servicio',   rango: '1:00 PM – 7:20 PM'   },
+  { id: '1pm',   hora: '1:00 PM',  label: 'Tercer Servicio',   rango: '1:00 PM – 2:50 PM'   },
   { id: '730pm', hora: '7:30 PM',  label: 'Servicio Nocturno', rango: '7:30 PM – 9:00 PM'   },
 ] as const;
 
@@ -45,9 +45,9 @@ export const PROGRAMACION_SERVICIO: Record<ServicioId, ItemProgramacion[]> = {
     { hora: '1:15 PM',  actividad: 'Alabanza y adoración',   icono: '🎵' },
     { hora: '1:45 PM',  actividad: 'Mensaje bíblico',        icono: '📖' },
     { hora: '2:15 PM',  actividad: 'Actividad creativa',     icono: '🎨' },
-    { hora: '2:50 PM',  actividad: 'Refrigerio',             icono: '🍎' },
-    { hora: '3:10 PM',  actividad: 'Oración y cierre',       icono: '🙏' },
-    { hora: '7:20 PM',  actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
+    { hora: '2:30 PM',  actividad: 'Refrigerio',             icono: '🍎' },
+    { hora: '2:40 PM',  actividad: 'Oración y cierre',       icono: '🙏' },
+    { hora: '2:50 PM',  actividad: 'Entrega de niños',       icono: '👨‍👩‍👧' },
   ],
   '730pm': [
     { hora: '7:30 PM',  actividad: 'Recepción de niños',     icono: '🚪' },
