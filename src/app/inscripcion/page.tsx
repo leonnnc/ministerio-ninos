@@ -50,7 +50,7 @@ export default function InscripcionPage() {
     <main className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Inscripción de Niños</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Inscripción de Niños(as)</h1>
           <p className="mt-2 text-gray-600">
             Complete el formulario para inscribir a su hijo/a en el Ministerio de Niños.
           </p>

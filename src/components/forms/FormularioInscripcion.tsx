@@ -101,7 +101,7 @@ export default function FormularioInscripcion({ onExito }: FormularioInscripcion
 
       {/* ── DATOS DEL NIÑO ── */}
       <Card>
-        <h2 className="text-lg font-bold mb-4" style={{ color: '#4a2c00' }}>👦 Datos del Niño</h2>
+        <h2 className="text-lg font-bold mb-4" style={{ color: '#4a2c00' }}>👦 Datos del Niño(a)</h2>
         <div className="flex flex-col gap-4">
 
           <Input label="Nombre completo *" placeholder="Ej: Juan Pérez García"
