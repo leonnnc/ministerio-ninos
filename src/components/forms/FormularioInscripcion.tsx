@@ -146,32 +146,72 @@ export default function FormularioInscripcion({ onExito }: FormularioInscripcion
             )}
           </div>
 
-          <div className="flex flex-col gap-1 w-full">
-            <label htmlFor="alumno-foto" className="text-sm font-medium text-gray-700">
+          {/* Fotografía — tomar foto o subir desde galería */}
+          <div className="flex flex-col gap-2 w-full">
+            <label className="text-sm font-medium text-gray-700">
               Fotografía <span className="text-gray-400 font-normal">(opcional)</span>
             </label>
-            <input
-              id="alumno-foto"
-              type="file"
-              accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-              onChange={manejarCambioFoto}
-              className={[
-                'w-full rounded-lg border px-3 py-2 text-sm text-gray-900',
-                'file:mr-3 file:py-1 file:px-3 file:rounded file:border-0',
-                'file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700',
-                'hover:file:bg-primary-100 transition-colors duration-150',
-                errorFoto
-                  ? 'border-red-500'
-                  : 'border-gray-300',
-              ].join(' ')}
-              aria-invalid={!!errorFoto}
-              aria-describedby={errorFoto ? 'alumno-foto-error' : undefined}
-            />
-            {errorFoto && (
-              <p id="alumno-foto-error" className="text-xs text-red-600" role="alert">
-                {errorFoto}
-              </p>
+
+            {/* Preview de la foto */}
+            {fotoBase64 && (
+              <div className="relative w-24 h-24 mx-auto">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={fotoBase64}
+                  alt="Vista previa"
+                  className="w-24 h-24 rounded-full object-cover border-4 border-yellow-300 shadow"
+                />
+                <button
+                  type="button"
+                  onClick={() => setFotoBase64(undefined)}
+                  className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-500 text-white text-xs flex items-center justify-center shadow"
+                  aria-label="Quitar foto"
+                >
+                  ✕
+                </button>
+              </div>
             )}
+
+            {/* Botones de acción */}
+            <div className="flex gap-2">
+              {/* Tomar foto con cámara (móvil) */}
+              <label
+                htmlFor="foto-camara"
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-semibold transition-colors hover:bg-yellow-50"
+                style={{ borderColor: '#F5C518', color: '#92400e' }}
+              >
+                📷 Tomar foto
+                <input
+                  id="foto-camara"
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  className="hidden"
+                  onChange={manejarCambioFoto}
+                />
+              </label>
+
+              {/* Subir desde galería */}
+              <label
+                htmlFor="foto-galeria"
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-semibold transition-colors hover:bg-yellow-50"
+                style={{ borderColor: '#FDE68A', color: '#92400e' }}
+              >
+                🖼️ Galería
+                <input
+                  id="foto-galeria"
+                  type="file"
+                  accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={manejarCambioFoto}
+                />
+              </label>
+            </div>
+
+            {errorFoto && (
+              <p className="text-xs text-red-600" role="alert">{errorFoto}</p>
+            )}
+            <p className="text-xs text-gray-400">JPG, PNG o WebP · máximo 5MB</p>
           </div>
         </div>
       </Card>
