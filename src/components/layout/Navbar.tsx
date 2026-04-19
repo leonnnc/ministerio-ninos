@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAuthStore } from '@/stores/authStore';
 
 const links = [
   { href: '/', label: 'Inicio' },
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { estaAutenticado, usuarioActual, cerrarSesion } = useAuthStore();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -38,19 +40,38 @@ export default function Navbar() {
         </Link>
 
         {/* Links desktop */}
-        <ul className="hidden md:flex gap-6 text-sm font-medium">
+        <ul className="hidden md:flex gap-6 text-sm font-medium items-center">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link
                 href={href}
-                className={`hover:text-primary-200 transition-colors ${
-                  pathname === href ? 'text-primary-200 underline underline-offset-4' : ''
+                className={`hover:text-yellow-200 transition-colors ${
+                  pathname === href ? 'text-yellow-200 underline underline-offset-4' : ''
                 }`}
               >
                 {label}
               </Link>
             </li>
           ))}
+          <li>
+            {estaAutenticado ? (
+              <div className="flex items-center gap-3">
+                <Link href="/portal"
+                  className="text-sm font-semibold bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg transition-colors">
+                  Mi Portal
+                </Link>
+                <button onClick={cerrarSesion}
+                  className="text-xs text-white/70 hover:text-white transition-colors">
+                  Salir
+                </button>
+              </div>
+            ) : (
+              <Link href="/login"
+                className="bg-white text-yellow-800 font-bold px-4 py-1.5 rounded-lg hover:bg-yellow-50 transition-colors text-sm shadow">
+                Acceder
+              </Link>
+            )}
+          </li>
         </ul>
 
         {/* Hamburger button */}
@@ -73,8 +94,8 @@ export default function Navbar() {
             <li key={href}>
               <Link
                 href={href}
-                className={`block py-1 hover:text-primary-200 transition-colors ${
-                  pathname === href ? 'text-primary-200 underline underline-offset-4' : ''
+                className={`block py-1 hover:text-yellow-200 transition-colors ${
+                  pathname === href ? 'text-yellow-200 underline underline-offset-4' : ''
                 }`}
                 onClick={() => setOpen(false)}
               >
@@ -82,6 +103,19 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
+          <li>
+            {estaAutenticado ? (
+              <Link href="/portal" onClick={() => setOpen(false)}
+                className="block py-1 font-bold text-yellow-200">
+                Mi Portal ({usuarioActual?.nombreCompleto?.split(' ')[0]})
+              </Link>
+            ) : (
+              <Link href="/login" onClick={() => setOpen(false)}
+                className="block py-1 font-bold text-yellow-200">
+                Acceder
+              </Link>
+            )}
+          </li>
         </ul>
       )}
     </nav>
