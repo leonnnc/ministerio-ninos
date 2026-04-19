@@ -8,6 +8,7 @@ import { useAlumnosStore } from '@/stores/alumnosStore';
 import { useSalonesStore } from '@/stores/salonesStore';
 import { usePersonalStore } from '@/stores/personalStore';
 import { Badge } from '@/components/ui';
+import { useAgendaStore, SERVICIOS_DOMINGO, proximosDomingos, formatearFechaDomingo } from '@/stores/agendaStore';
 import type { Rol } from '@/types';
 
 const rolLabel: Record<Rol, string> = {
@@ -33,7 +34,8 @@ export default function PortalPage() {
   const apoderados = useAlumnosStore((s) => s.apoderados);
   const salones = useSalonesStore((s) => s.salones);
   const inicializarSalones = useSalonesStore((s) => s.inicializarSalones);
-  const personal = usePersonalStore((s) => s.personal);
+  const { obtenerPorFechaYServicio } = useAgendaStore();
+  const proximoDomingo = proximosDomingos(1)[0] ?? '';
 
   useEffect(() => {
     inicializarSalones();
@@ -86,13 +88,79 @@ export default function PortalPage() {
 
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
 
+        {/* ── AGENDA DEL PRÓXIMO DOMINGO ── */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold" style={{ color: accentColor }}>
+              📅 Agenda del Próximo Domingo
+            </h2>
+            <Link href="/portal/agenda"
+              className="text-sm font-semibold px-3 py-1.5 rounded-xl border-2 transition-colors hover:bg-yellow-50"
+              style={{ borderColor: '#F5C518', color: '#92400e' }}>
+              Ver completa →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {SERVICIOS_DOMINGO.map((servicio) => {
+              let asigs = obtenerPorFechaYServicio(proximoDomingo, servicio.id);
+              if (esMaestro) asigs = asigs.filter((a) => a.maestroId === usuarioActual.id);
+
+              return (
+                <div key={servicio.id} className="rounded-2xl border-2 border-yellow-200 bg-white overflow-hidden shadow-sm">
+                  <div className="px-4 py-3 flex items-center gap-3" style={{ background: '#FFF9C4' }}>
+                    <div className="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-white text-xs font-bold"
+                      style={{ background: '#F5C518', color: '#4a2c00' }}>
+                      <span>{servicio.hora.split(' ')[0]}</span>
+                      <span className="opacity-70">{servicio.hora.split(' ')[1]}</span>
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm" style={{ color: '#4a2c00' }}>{servicio.hora}</p>
+                      <p className="text-xs" style={{ color: '#78350f' }}>{servicio.label}</p>
+                    </div>
+                  </div>
+                  <div className="px-4 py-3">
+                    {asigs.length === 0 ? (
+                      <p className="text-xs text-gray-400 py-1">
+                        {esMaestro ? 'Sin asignación' : 'Sin asignaciones aún'}
+                      </p>
+                    ) : (
+                      <div className="space-y-2">
+                        {asigs.map((asig) => (
+                          <div key={asig.id} className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-none text-white"
+                              style={{ background: '#F5C518', color: '#4a2c00' }}>
+                              {personal.find((p) => p.id === asig.maestroId)?.nombreCompleto.charAt(0) ?? '?'}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-xs font-semibold truncate text-gray-800">
+                                {salones.find((s) => s.id === asig.salonId)?.nombre ?? '—'}
+                              </p>
+                              <p className="text-xs text-gray-400 truncate">
+                                {personal.find((p) => p.id === asig.maestroId)?.nombreCompleto ?? '—'}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-xs text-center mt-2 capitalize" style={{ color: '#D97706' }}>
+            {formatearFechaDomingo(proximoDomingo)}
+          </p>
+        </div>
+
         {/* Acceso rápido a Agenda — visible para todos */}
         <Link href="/portal/agenda"
           className="flex items-center gap-4 rounded-2xl border-2 border-yellow-300 bg-white p-5 hover:shadow-md transition-shadow">
           <span className="text-4xl">📅</span>
           <div>
-            <p className="font-bold text-gray-800">Agenda Dominical</p>
-            <p className="text-sm text-gray-500">Ver programación de servicios y asignaciones</p>
+            <p className="font-bold text-gray-800">Agenda Dominical Completa</p>
+            <p className="text-sm text-gray-500">Ver todos los domingos y servicios</p>
           </div>
           <span className="ml-auto text-yellow-500 text-xl">→</span>
         </Link>
