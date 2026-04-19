@@ -8,7 +8,6 @@ import { useSalonesStore } from '@/stores/salonesStore';
 import { useAgendaStore, proximosDomingos, SERVICIOS_DOMINGO } from '@/stores/agendaStore';
 import type { Personal, Alumno, Apoderado } from '@/types';
 
-// ── 20 Maestros con emails reales para login ──────────────────────────────────
 const MAESTROS_DEMO: { nombre: string; email: string }[] = [
   { nombre: 'Ana García',        email: 'ana.garcia@ministerio.com' },
   { nombre: 'María López',       email: 'maria.lopez@ministerio.com' },
@@ -32,9 +31,8 @@ const MAESTROS_DEMO: { nombre: string; email: string }[] = [
   { nombre: 'Cristina Vega',     email: 'cristina.vega@ministerio.com' },
 ];
 
-// ── 80 Niños con apoderados ───────────────────────────────────────────────────
 const NINOS_DEMO = [
-  // Cuna (0-2 años) — 20 niños
+  // Cuna (0-2 años)
   { nombre: 'Emilio Pérez',      fecha: '2024-03-10', sexo: 'masculino', apoderado: 'Roberto Pérez',    tel: '+56912345001' },
   { nombre: 'Valentina Cruz',    fecha: '2023-11-05', sexo: 'femenino',  apoderado: 'Sandra Cruz',      tel: '+56912345002' },
   { nombre: 'Mateo Silva',       fecha: '2024-01-20', sexo: 'masculino', apoderado: 'Jorge Silva',      tel: '+56912345003' },
@@ -55,7 +53,7 @@ const NINOS_DEMO = [
   { nombre: 'Mariana López',     fecha: '2023-04-28', sexo: 'femenino',  apoderado: 'Gabriela López',   tel: '+56912345018' },
   { nombre: 'Santiago García',   fecha: '2024-10-02', sexo: 'masculino', apoderado: 'Hernán García',    tel: '+56912345019' },
   { nombre: 'Valeria Sánchez',   fecha: '2023-03-15', sexo: 'femenino',  apoderado: 'Natalia Sánchez',  tel: '+56912345020' },
-  // Preescolar (3-5 años) — 20 niños
+  // Preescolar (3-5 años)
   { nombre: 'Diego Pérez',       fecha: '2021-03-10', sexo: 'masculino', apoderado: 'Roberto Pérez',    tel: '+56912345021' },
   { nombre: 'Fernanda Cruz',     fecha: '2020-11-05', sexo: 'femenino',  apoderado: 'Sandra Cruz',      tel: '+56912345022' },
   { nombre: 'Joaquín Silva',     fecha: '2021-01-20', sexo: 'masculino', apoderado: 'Jorge Silva',      tel: '+56912345023' },
@@ -76,7 +74,7 @@ const NINOS_DEMO = [
   { nombre: 'Verónica López',    fecha: '2020-04-28', sexo: 'femenino',  apoderado: 'Gabriela López',   tel: '+56912345038' },
   { nombre: 'Gabriel García',    fecha: '2021-10-02', sexo: 'masculino', apoderado: 'Hernán García',    tel: '+56912345039' },
   { nombre: 'Natalia Sánchez',   fecha: '2020-03-15', sexo: 'femenino',  apoderado: 'Natalia Sánchez',  tel: '+56912345040' },
-  // Primaria Baja (6-10 años) — 20 niños
+  // Primaria Baja (6-10 años)
   { nombre: 'Samuel Pérez',      fecha: '2017-03-10', sexo: 'masculino', apoderado: 'Roberto Pérez',    tel: '+56912345041' },
   { nombre: 'Abigail Cruz',      fecha: '2016-11-05', sexo: 'femenino',  apoderado: 'Sandra Cruz',      tel: '+56912345042' },
   { nombre: 'David Silva',       fecha: '2018-01-20', sexo: 'masculino', apoderado: 'Jorge Silva',      tel: '+56912345043' },
@@ -97,7 +95,7 @@ const NINOS_DEMO = [
   { nombre: 'Priscila López',    fecha: '2016-04-28', sexo: 'femenino',  apoderado: 'Gabriela López',   tel: '+56912345058' },
   { nombre: 'Pedro García',      fecha: '2018-10-02', sexo: 'masculino', apoderado: 'Hernán García',    tel: '+56912345059' },
   { nombre: 'Lidia Sánchez',     fecha: '2015-03-15', sexo: 'femenino',  apoderado: 'Natalia Sánchez',  tel: '+56912345060' },
-  // Primaria Alta (11-13 años) — 20 niños
+  // Primaria Alta (11-13 años)
   { nombre: 'Juan Pérez',        fecha: '2012-03-10', sexo: 'masculino', apoderado: 'Roberto Pérez',    tel: '+56912345061' },
   { nombre: 'Febe Cruz',         fecha: '2011-11-05', sexo: 'femenino',  apoderado: 'Sandra Cruz',      tel: '+56912345062' },
   { nombre: 'Marcos Silva',      fecha: '2013-01-20', sexo: 'masculino', apoderado: 'Jorge Silva',      tel: '+56912345063' },
@@ -124,7 +122,7 @@ export default function DemoPage() {
   const router = useRouter();
   const { agregarPersonal } = usePersonalStore();
   const { agregarAlumno } = useAlumnosStore();
-  const { salones, inicializarSalones, asignarMaestro } = useSalonesStore();
+  const { inicializarSalones, asignarMaestro } = useSalonesStore();
   const { agregarAsignacion } = useAgendaStore();
 
   const [cargando, setCargando] = useState(false);
@@ -140,22 +138,25 @@ export default function DemoPage() {
     setCargando(true);
     setLog([]);
 
-    // 1. Inicializar salones
-    inicializarSalones();
-    await new Promise((r) => setTimeout(r, 300));
+    // 1. Inicializar salones en Firestore
+    addLog('⏳ Creando salones...');
+    await inicializarSalones();
+    await new Promise((r) => setTimeout(r, 800));
 
     const salonesActuales = useSalonesStore.getState().salones;
     if (salonesActuales.length === 0) {
-      addLog('❌ No se pudieron crear los salones');
+      addLog('❌ No se pudieron crear los salones. Verifica las reglas de Firestore.');
       setCargando(false);
       return;
     }
-    addLog(`✅ ${salonesActuales.length} salones listos`);
+    addLog(`✅ ${salonesActuales.length} salones creados en Firestore`);
 
-    // 2. Registrar 20 maestros en personalStore (con email para login)
+    // 2. Registrar 20 maestros en Firestore
+    addLog('⏳ Registrando 20 maestros...');
     const maestrosCreados: Personal[] = [];
-    MAESTROS_DEMO.forEach((m, i) => {
-      const salonIdx = Math.floor(i / 5); // 5 maestros por salón
+    for (let i = 0; i < MAESTROS_DEMO.length; i++) {
+      const m = MAESTROS_DEMO[i];
+      const salonIdx = Math.floor(i / 5);
       const salon = salonesActuales[salonIdx];
       const maestro: Personal = {
         id: crypto.randomUUID(),
@@ -165,21 +166,20 @@ export default function DemoPage() {
         email: m.email,
         salonesIds: salon ? [salon.id] : [],
       };
-      agregarPersonal(maestro);
+      await agregarPersonal(maestro);
       maestrosCreados.push(maestro);
-      // Primera maestra de cada grupo = maestra principal del salón
-      if (i % 5 === 0 && salon) asignarMaestro(salon.id, maestro.id);
-    });
-    addLog(`✅ 20 maestros registrados con email y contraseña`);
+      if (i % 5 === 0 && salon) await asignarMaestro(salon.id, maestro.id);
+    }
+    addLog(`✅ 20 maestros registrados en Firestore`);
 
-    // 3. Inscribir 80 niños con apoderados
-    const salonesFinales = useSalonesStore.getState().salones;
+    // 3. Inscribir 80 niños en Firestore
+    addLog('⏳ Inscribiendo 80 niños...');
     const gruposSalones = ['Cuna', 'Preescolar', 'PrimariaBaja', 'PrimariaAlta'];
-
-    NINOS_DEMO.forEach((nino, i) => {
+    for (let i = 0; i < NINOS_DEMO.length; i++) {
+      const nino = NINOS_DEMO[i];
       const grupoIdx = Math.floor(i / 20);
-      const salon = salonesFinales.find((s) => s.grupoEdad === gruposSalones[grupoIdx]);
-      if (!salon) return;
+      const salon = salonesActuales.find((s) => s.grupoEdad === gruposSalones[grupoIdx]);
+      if (!salon) continue;
 
       const apoderadoId = crypto.randomUUID();
       const alumnoId = crypto.randomUUID();
@@ -202,24 +202,25 @@ export default function DemoPage() {
         fechaRegistro: new Date().toISOString(),
       };
 
-      agregarAlumno(alumno, apoderado);
-    });
-    addLog(`✅ 80 niños inscritos con sus apoderados`);
+      await agregarAlumno(alumno, apoderado);
+    }
+    addLog(`✅ 80 niños inscritos en Firestore`);
 
     // 4. Crear agenda para los próximos 2 domingos
+    addLog('⏳ Creando agenda...');
     const domingos = proximosDomingos(2);
     const alumnosFinales = useAlumnosStore.getState().alumnos;
 
     for (const fecha of domingos) {
       for (const servicio of SERVICIOS_DOMINGO) {
         for (let g = 0; g < 4; g++) {
-          const salon = salonesFinales[g];
+          const salon = salonesActuales[g];
           if (!salon) continue;
           const maestraIdx = (g * 5) + (SERVICIOS_DOMINGO.indexOf(servicio) % 5);
           const maestra = maestrosCreados[maestraIdx];
           if (!maestra) continue;
           const alumnosSalon = alumnosFinales.filter((a) => a.salonId === salon.id).map((a) => a.id);
-          agregarAsignacion({
+          await agregarAsignacion({
             id: crypto.randomUUID(),
             fecha,
             servicioId: servicio.id,
@@ -232,8 +233,8 @@ export default function DemoPage() {
       }
     }
     addLog(`✅ Agenda creada para los próximos 2 domingos`);
+    addLog(`🎉 ¡Todo listo! Los datos están en Firebase.`);
 
-    await new Promise((r) => setTimeout(r, 200));
     setListo(true);
     setCargando(false);
   }
@@ -242,19 +243,18 @@ export default function DemoPage() {
     <div className="min-h-screen px-4 py-12" style={{ background: '#FFFDE7' }}>
       <div className="max-w-2xl mx-auto space-y-6">
 
-        {/* Card principal */}
         <div className="rounded-3xl overflow-hidden shadow-xl border-2 border-yellow-200 bg-white">
           <div className="px-6 py-6 text-center" style={{ background: '#F5C518' }}>
             <p className="text-4xl mb-2">🧪</p>
-            <h1 className="text-xl font-extrabold" style={{ color: '#4a2c00' }}>Datos Demo</h1>
+            <h1 className="text-xl font-extrabold" style={{ color: '#4a2c00' }}>Datos Demo — Firebase</h1>
             <p className="text-sm mt-1" style={{ color: '#78350f' }}>
-              20 maestros suscritos · 80 niños inscritos · Agenda precargada
+              20 maestros · 80 niños · Agenda precargada en Firestore
             </p>
           </div>
 
           <div className="px-6 py-6 space-y-4">
             {log.length > 0 && (
-              <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-4 space-y-1">
+              <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-4 space-y-1 max-h-48 overflow-y-auto">
                 {log.map((l, i) => <p key={i} className="text-sm" style={{ color: '#4a2c00' }}>{l}</p>)}
               </div>
             )}
@@ -263,12 +263,12 @@ export default function DemoPage() {
               <button onClick={cargarDemo} disabled={cargando}
                 className="w-full py-3 rounded-xl font-bold text-sm transition-opacity disabled:opacity-50"
                 style={{ background: '#F5C518', color: '#4a2c00' }}>
-                {cargando ? 'Cargando...' : 'Cargar datos demo'}
+                {cargando ? 'Cargando en Firebase...' : 'Cargar datos demo'}
               </button>
             ) : (
               <div className="space-y-3">
                 <div className="rounded-xl bg-green-50 border border-green-200 p-3 text-center">
-                  <p className="text-green-700 font-bold text-sm">✅ Datos cargados exitosamente</p>
+                  <p className="text-green-700 font-bold text-sm">✅ Datos cargados en Firebase</p>
                 </div>
                 <button onClick={() => router.push('/portal')}
                   className="w-full py-3 rounded-xl font-bold text-sm"
@@ -280,7 +280,7 @@ export default function DemoPage() {
           </div>
         </div>
 
-        {/* Credenciales de acceso */}
+        {/* Credenciales */}
         <div className="rounded-2xl border-2 border-yellow-200 bg-white overflow-hidden">
           <button onClick={() => setMostrarCredenciales(!mostrarCredenciales)}
             className="w-full px-5 py-4 flex items-center justify-between text-left"
@@ -323,7 +323,7 @@ export default function DemoPage() {
         </div>
 
         <p className="text-xs text-center text-gray-400">
-          ⚠️ Solo para pruebas. Los datos se guardan en localStorage del navegador.
+          Los datos se guardan directamente en Firebase Firestore.
         </p>
       </div>
     </div>
