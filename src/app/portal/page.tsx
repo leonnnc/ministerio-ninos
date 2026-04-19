@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useAlumnosStore } from '@/stores/alumnosStore';
 import { useSalonesStore } from '@/stores/salonesStore';
 import { usePersonalStore } from '@/stores/personalStore';
-import { Badge, Button } from '@/components/ui';
+import { Badge } from '@/components/ui';
 import type { Rol } from '@/types';
 
 const rolLabel: Record<Rol, string> = {
@@ -65,23 +65,41 @@ export default function PortalPage() {
     router.push('/');
   }
 
+  // Colores según rol: admin/maestros = formal ámbar oscuro, resto = alegre amarillo
+  const esRolFormal = esAdmin || esMaestro;
+  const headerBg = esRolFormal ? '#B45309' : '#FFD600';
+  const headerTexto = esRolFormal ? '#fff' : '#4a2c00';
+  const headerSubtexto = esRolFormal ? '#fde68a' : '#78350f';
+  const fondoPagina = esRolFormal ? '#fffbf0' : '#FFFDE7';
+  const accentColor = esRolFormal ? '#92400e' : '#E65100';
+  const salonHeaderBg = esRolFormal ? '#B45309' : '#FFD600';
+  const salonHeaderTexto = esRolFormal ? '#fff' : '#4a2c00';
+
   return (
-    <div className="min-h-screen" style={{ background: '#FFFDE7' }}>
+    <div className="min-h-screen" style={{ background: fondoPagina }}>
       {/* Header del portal */}
-      <div className="px-6 py-8" style={{ background: 'linear-gradient(135deg, #F57F17, #FFD600)' }}>
+      <div className="px-6 py-8" style={{ background: headerBg }}>
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-medium mb-1" style={{ color: '#78350f' }}>Bienvenido/a</p>
-            <h1 className="text-2xl font-extrabold" style={{ color: '#4a2c00' }}>
+            <p className="text-sm font-medium mb-1" style={{ color: headerSubtexto }}>Bienvenido/a</p>
+            <h1 className="text-2xl font-extrabold" style={{ color: headerTexto }}>
               {usuarioActual.nombreCompleto}
             </h1>
             <div className="mt-2">
               <Badge label={rolLabel[usuarioActual.rol]} variant={rolColor[usuarioActual.rol]} />
             </div>
           </div>
-          <Button variant="outline" onClick={handleCerrarSesion} size="sm">
+          <button
+            onClick={handleCerrarSesion}
+            className="px-4 py-2 rounded-xl text-sm font-semibold border-2 transition-colors"
+            style={{
+              borderColor: esRolFormal ? '#fde68a' : '#4a2c00',
+              color: esRolFormal ? '#fde68a' : '#4a2c00',
+              background: 'transparent',
+            }}
+          >
             Cerrar sesión
-          </Button>
+          </button>
         </div>
       </div>
 
@@ -90,33 +108,31 @@ export default function PortalPage() {
         {/* Admin: acceso rápido al panel completo */}
         {esAdmin && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link href="/admin" className="rounded-2xl border-2 border-yellow-300 bg-yellow-50 p-5 text-center hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-2">⚙️</div>
-              <p className="font-bold" style={{ color: '#78350f' }}>Panel Admin</p>
-              <p className="text-xs mt-1" style={{ color: '#92400e' }}>Gestión completa</p>
-            </Link>
-            <Link href="/admin/personal" className="rounded-2xl border-2 border-yellow-300 bg-yellow-50 p-5 text-center hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-2">👥</div>
-              <p className="font-bold" style={{ color: '#78350f' }}>Personal</p>
-              <p className="text-xs mt-1" style={{ color: '#92400e' }}>{personal.length} miembros</p>
-            </Link>
-            <Link href="/admin/alumnos" className="rounded-2xl border-2 border-yellow-300 bg-yellow-50 p-5 text-center hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-2">🎒</div>
-              <p className="font-bold" style={{ color: '#78350f' }}>Alumnos</p>
-              <p className="text-xs mt-1" style={{ color: '#92400e' }}>{alumnos.length} inscritos</p>
-            </Link>
+            {[
+              { href: '/admin', emoji: '⚙️', label: 'Panel Admin', sub: 'Gestión completa' },
+              { href: '/admin/personal', emoji: '👥', label: 'Personal', sub: `${personal.length} miembros` },
+              { href: '/admin/alumnos', emoji: '🎒', label: 'Alumnos', sub: `${alumnos.length} inscritos` },
+            ].map((item) => (
+              <Link key={item.href} href={item.href}
+                className="rounded-2xl border-2 p-5 text-center hover:shadow-md transition-shadow bg-white"
+                style={{ borderColor: '#D97706' }}>
+                <div className="text-3xl mb-2">{item.emoji}</div>
+                <p className="font-bold" style={{ color: '#78350f' }}>{item.label}</p>
+                <p className="text-xs mt-1 text-gray-500">{item.sub}</p>
+              </Link>
+            ))}
           </div>
         )}
 
         {/* Mis salones */}
         <div>
-          <h2 className="text-xl font-bold mb-4" style={{ color: '#E65100' }}>
+          <h2 className="text-xl font-bold mb-4" style={{ color: accentColor }}>
             {esAdmin ? 'Todos los Salones' : 'Mi Salón'}
           </h2>
 
           {misSalones.length === 0 ? (
-            <div className="rounded-2xl border-2 border-yellow-200 bg-yellow-50 p-8 text-center">
-              <p className="text-lg" style={{ color: '#92400e' }}>
+            <div className="rounded-2xl border-2 p-8 text-center bg-white" style={{ borderColor: '#D97706' }}>
+              <p className="text-lg text-gray-600">
                 {esMaestro || esAuxiliar
                   ? 'Aún no tienes un salón asignado. Contacta al administrador.'
                   : 'No hay salones configurados aún.'}
@@ -132,58 +148,54 @@ export default function PortalPage() {
                   .filter(Boolean);
 
                 return (
-                  <div key={salon.id} className="rounded-2xl border-2 border-yellow-300 bg-white shadow-sm overflow-hidden">
-                    {/* Header del salón */}
-                    <div className="px-5 py-4" style={{ background: 'linear-gradient(90deg, #FFD600, #FFEE58)' }}>
-                      <h3 className="text-lg font-bold" style={{ color: '#4a2c00' }}>{salon.nombre}</h3>
-                      <p className="text-sm" style={{ color: '#78350f' }}>{salon.edadMinima} – {salon.edadMaxima} años</p>
+                  <div key={salon.id} className="rounded-2xl border-2 bg-white shadow-sm overflow-hidden" style={{ borderColor: '#D97706' }}>
+                    <div className="px-5 py-4" style={{ background: salonHeaderBg }}>
+                      <h3 className="text-lg font-bold" style={{ color: salonHeaderTexto }}>{salon.nombre}</h3>
+                      <p className="text-sm" style={{ color: esRolFormal ? '#fde68a' : '#78350f' }}>
+                        {salon.edadMinima} – {salon.edadMaxima} años
+                      </p>
                     </div>
 
                     <div className="p-5 space-y-4">
-                      {/* Personal del salón */}
                       <div className="flex flex-wrap gap-3 text-sm">
                         <div>
-                          <span className="font-semibold" style={{ color: '#92400e' }}>Maestro: </span>
-                          <span style={{ color: '#4a2c00' }}>{maestro?.nombreCompleto ?? 'Sin asignar'}</span>
+                          <span className="font-semibold text-gray-600">Maestro: </span>
+                          <span className="text-gray-800">{maestro?.nombreCompleto ?? 'Sin asignar'}</span>
                         </div>
                         {auxiliaresSalon.length > 0 && (
                           <div>
-                            <span className="font-semibold" style={{ color: '#92400e' }}>Auxiliares: </span>
-                            <span style={{ color: '#4a2c00' }}>{auxiliaresSalon.map((a) => a?.nombreCompleto).join(', ')}</span>
+                            <span className="font-semibold text-gray-600">Auxiliares: </span>
+                            <span className="text-gray-800">{auxiliaresSalon.map((a) => a?.nombreCompleto).join(', ')}</span>
                           </div>
                         )}
                       </div>
 
-                      {/* Lista de niños */}
                       <div>
-                        <p className="font-semibold text-sm mb-2" style={{ color: '#E65100' }}>
+                        <p className="font-semibold text-sm mb-2" style={{ color: accentColor }}>
                           Niños inscritos ({alumnosSalon.length})
                         </p>
                         {alumnosSalon.length === 0 ? (
-                          <p className="text-sm" style={{ color: '#92400e' }}>Sin alumnos inscritos aún</p>
+                          <p className="text-sm text-gray-400">Sin alumnos inscritos aún</p>
                         ) : (
                           <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                             {alumnosSalon.map((alumno) => {
                               const apoderado = apoderados.find((ap) => ap.id === alumno.apoderadoId);
                               return (
-                                <div key={alumno.id} className="flex items-center gap-3 rounded-xl p-2 border border-yellow-100 bg-yellow-50">
-                                  {/* Avatar */}
+                                <div key={alumno.id} className="flex items-center gap-3 rounded-xl p-2 border border-amber-100 bg-amber-50">
                                   {alumno.fotografiaUrl ? (
                                     // eslint-disable-next-line @next/next/no-img-element
                                     <img src={alumno.fotografiaUrl} alt={alumno.nombreCompleto}
-                                      className="w-9 h-9 rounded-full object-cover border-2 border-yellow-300 flex-none" />
+                                      className="w-9 h-9 rounded-full object-cover border-2 border-amber-300 flex-none" />
                                   ) : (
-                                    <div className="w-9 h-9 rounded-full flex-none flex items-center justify-center font-bold text-sm border-2 border-yellow-300"
-                                      style={{ background: '#FFD600', color: '#4a2c00' }}>
+                                    <div className="w-9 h-9 rounded-full flex-none flex items-center justify-center font-bold text-sm border-2 border-amber-300"
+                                      style={{ background: '#FCD34D', color: '#4a2c00' }}>
                                       {alumno.nombreCompleto.charAt(0).toUpperCase()}
                                     </div>
                                   )}
                                   <div className="min-w-0">
-                                    <p className="font-medium text-sm truncate" style={{ color: '#4a2c00' }}>
-                                      {alumno.nombreCompleto}
-                                    </p>
+                                    <p className="font-medium text-sm truncate text-gray-800">{alumno.nombreCompleto}</p>
                                     {apoderado && (
-                                      <p className="text-xs truncate" style={{ color: '#92400e' }}>
+                                      <p className="text-xs truncate text-gray-500">
                                         {apoderado.nombreCompleto} · {apoderado.telefono}
                                       </p>
                                     )}
@@ -202,15 +214,15 @@ export default function PortalPage() {
           )}
         </div>
 
-        {/* Programación semanal (placeholder) */}
+        {/* Programación */}
         <div>
-          <h2 className="text-xl font-bold mb-4" style={{ color: '#E65100' }}>Programación</h2>
-          <div className="rounded-2xl border-2 border-yellow-200 bg-yellow-50 p-6">
-            <div className="flex items-center gap-3 mb-4">
+          <h2 className="text-xl font-bold mb-4" style={{ color: accentColor }}>Programación</h2>
+          <div className="rounded-2xl border-2 bg-white p-6" style={{ borderColor: '#D97706' }}>
+            <div className="flex items-center gap-3 mb-5">
               <span className="text-3xl">📅</span>
               <div>
-                <p className="font-bold" style={{ color: '#4a2c00' }}>Próximo Domingo</p>
-                <p className="text-sm" style={{ color: '#78350f' }}>Reunión dominical del ministerio</p>
+                <p className="font-bold text-gray-800">Próximo Domingo</p>
+                <p className="text-sm text-gray-500">Reunión dominical del ministerio</p>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
@@ -222,11 +234,11 @@ export default function PortalPage() {
                 { hora: '10:45 AM', actividad: 'Refrigerio', icono: '🍎' },
                 { hora: '11:00 AM', actividad: 'Entrega de niños', icono: '👨‍👩‍👧' },
               ].map((item) => (
-                <div key={item.hora} className="flex items-center gap-2 rounded-xl p-3 bg-white border border-yellow-200">
+                <div key={item.hora} className="flex items-center gap-2 rounded-xl p-3 border border-amber-100 bg-amber-50">
                   <span className="text-xl">{item.icono}</span>
                   <div>
-                    <p className="font-semibold" style={{ color: '#F57F17' }}>{item.hora}</p>
-                    <p style={{ color: '#4a2c00' }}>{item.actividad}</p>
+                    <p className="font-semibold" style={{ color: '#B45309' }}>{item.hora}</p>
+                    <p className="text-gray-700">{item.actividad}</p>
                   </div>
                 </div>
               ))}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 import { usePersonalStore } from '@/stores/personalStore';
-import { Button, Input, Card } from '@/components/ui';
+import { Input } from '@/components/ui';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -35,20 +35,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12"
-      style={{ background: 'linear-gradient(135deg, #F57F17 0%, #FFD600 50%, #FFF9C4 100%)' }}>
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-white">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="text-6xl mb-3">✝️</div>
-          <h1 className="text-3xl font-extrabold" style={{ color: '#4a2c00' }}>
+        {/* Franja superior formal */}
+        <div className="rounded-t-3xl px-8 pt-10 pb-8 text-center" style={{ background: '#B45309' }}>
+          <div className="text-5xl mb-3">✝️</div>
+          <h1 className="text-2xl font-extrabold text-white tracking-wide">
             Ministerio de Niños
           </h1>
-          <p className="mt-2 text-sm" style={{ color: '#78350f' }}>
-            Accede con tu cuenta para ver tu panel
+          <p className="mt-1 text-sm text-amber-200">
+            Portal de acceso para el equipo
           </p>
         </div>
 
-        <Card className="shadow-xl border-yellow-200">
+        {/* Formulario sobre fondo blanco */}
+        <div className="bg-white rounded-b-3xl shadow-xl border border-amber-100 px-8 py-8">
+          <h2 className="text-lg font-bold text-gray-800 mb-6">Iniciar sesión</h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <Input
               label="Correo electrónico"
@@ -73,20 +75,25 @@ export default function LoginPage() {
               </p>
             )}
 
-            <Button type="submit" loading={cargando} size="lg" className="w-full mt-1">
-              Ingresar
-            </Button>
+            <button
+              type="submit"
+              disabled={cargando}
+              className="w-full py-3 rounded-xl font-bold text-white transition-colors disabled:opacity-60"
+              style={{ background: cargando ? '#92400e' : '#B45309' }}
+            >
+              {cargando ? 'Ingresando...' : 'Ingresar'}
+            </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-yellow-100">
-            <p className="text-xs text-center" style={{ color: '#92400e' }}>
-              ¿Primera vez? Tu contraseña son los primeros 6 caracteres de tu correo + 123
+          <div className="mt-6 pt-4 border-t border-gray-100">
+            <p className="text-xs text-center text-gray-500">
+              Tu contraseña: primeros 6 caracteres del correo + <strong>123</strong>
             </p>
-            <p className="text-xs text-center mt-1" style={{ color: '#92400e' }}>
-              Ej: si tu correo es <strong>maria@iglesia.com</strong>, tu contraseña es <strong>maria@123</strong>
+            <p className="text-xs text-center text-gray-400 mt-1">
+              Ej: <strong>maria@iglesia.com</strong> → <strong>maria@123</strong>
             </p>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );
