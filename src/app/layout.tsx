@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FirestoreProvider from "@/components/FirestoreProvider";
 
 export const metadata: Metadata = {
   title: "Ministerio de Niños",
@@ -28,7 +29,9 @@ export default function RootLayout({
           Ir al contenido principal
         </a>
         <Navbar />
-        <main id="main-content" className="flex-1">{children}</main>
+        <FirestoreProvider>
+          <main id="main-content" className="flex-1">{children}</main>
+        </FirestoreProvider>
         <Footer />
       </body>
     </html>

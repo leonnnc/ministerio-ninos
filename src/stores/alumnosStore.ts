@@ -1,43 +1,30 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import type { Alumno, Apoderado } from '@/types';
+import { guardarAlumno } from '@/lib/firestore/alumnosService';
 
 interface AlumnosState {
   alumnos: Alumno[];
   apoderados: Apoderado[];
-  agregarAlumno: (alumno: Alumno, apoderado: Apoderado) => void;
+  agregarAlumno: (alumno: Alumno, apoderado: Apoderado) => Promise<void>;
   obtenerAlumnoPorId: (id: string) => Alumno | undefined;
   obtenerAlumnosPorSalon: (salonId: string) => Alumno[];
 }
 
-export const useAlumnosStore = create<AlumnosState>()(
-  persist(
-    (set, get) => ({
-      alumnos: [],
-      apoderados: [],
+export const useAlumnosStore = create<AlumnosState>()((set, get) => ({
+  alumnos: [],
+  apoderados: [],
 
-      agregarAlumno: (alumno, apoderado) => {
-        set((state) => ({
-          alumnos: [...state.alumnos, alumno],
-          apoderados: [...state.apoderados, apoderado],
-        }));
-      },
+  agregarAlumno: async (alumno, apoderado) => {
+    // Guardar en Firestore (la escucha en tiempo real actualiza el estado)
+    await guardarAlumno(alumno, apoderado);
+    // También actualizar localmente para respuesta inmediata
+    set((state) => ({
+      alumnos: [...state.alumnos, alumno],
+      apoderados: [...state.apoderados, apoderado],
+    }));
+  },
 
-      obtenerAlumnoPorId: (id) => {
-        return get().alumnos.find((a) => a.id === id);
-      },
+  obtenerAlumnoPorId: (id) => get().alumnos.find((a) => a.id === id),
 
-      obtenerAlumnosPorSalon: (salonId) => {
-        return get().alumnos.filter((a) => a.salonId === salonId);
-      },
-    }),
-    {
-      name: 'alumnos-storage',
-      onRehydrateStorage: () => (state, error) => {
-        if (error) {
-          console.warn('Error al rehidratar alumnos-storage:', error);
-        }
-      },
-    }
-  )
-);
+  obtenerAlumnosPorSalon: (salonId) => get().alumnos.filter((a) => a.salonId === salonId),
+}));
